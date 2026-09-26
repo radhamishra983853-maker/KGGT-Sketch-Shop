@@ -1,1835 +1,1473 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KGGT — Sketch Shop</title>
-<link rel="icon" type="image/png" href="new-logo.png.jpg">
 
 <style>
 :root{
- --bg:#07080d;
- --panel:#10131c;
- --panel2:#151925;
- --line:#252b3b;
- --text:#f5f7ff;
- --muted:#8c94a8;
- --accent:#00d9ff;
- --accent2:#7c5cff;
- --pink:#ff4fd8;
- --green:#39f2a2;
+--bg:#0d0d13;--panel:#171720;--line:#2b2b36;
+--muted:#9696a5;--p:#8b5cf6;--pink:#ec4899
 }
-
 *{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
-
 body{
- margin:0;
- background:
- radial-gradient(circle at 10% 10%,#18294b 0,transparent 28%),
- radial-gradient(circle at 90% 20%,#29143e 0,transparent 25%),
- linear-gradient(135deg,#07080d,#0b0e16 50%,#080910);
- color:var(--text);
- font-family:Arial,Helvetica,sans-serif;
- overflow-x:hidden;
+margin:0;background:radial-gradient(circle at 20% 0,#24183d,#0d0d13 34%);
+color:#fff;font:15px Arial,sans-serif
 }
-
-/* ===== AMBIENT BACKGROUND ===== */
-
-body:before{
- content:"";
- position:fixed;
- inset:0;
- pointer-events:none;
- opacity:.25;
- background-image:
- linear-gradient(#ffffff08 1px,transparent 1px),
- linear-gradient(90deg,#ffffff08 1px,transparent 1px);
- background-size:50px 50px;
- mask-image:linear-gradient(to bottom,black,transparent);
-}
-
-body:after{
- content:"";
- position:fixed;
- width:420px;
- height:420px;
- left:-180px;
- bottom:-180px;
- border-radius:50%;
- background:#00d9ff18;
- filter:blur(70px);
- pointer-events:none;
-}
-
-/* ===== BOOT ===== */
-
 #boot{
- position:fixed;
- inset:0;
- z-index:99999;
- background:#05060a;
- display:flex;
- align-items:center;
- justify-content:center;
- overflow:hidden;
- transition:opacity .7s ease,visibility .7s ease;
+position:fixed;inset:0;background:#0d0d13;z-index:9999;
+display:grid;place-items:center;
+animation:out .45s ease 1.55s forwards
 }
-
-#boot.hide{
- opacity:0;
- visibility:hidden;
- pointer-events:none;
+.bb{text-align:center;animation:in .65s ease}
+.bl{
+font-size:64px;font-weight:900;letter-spacing:7px;color:var(--p);
+text-shadow:0 0 25px #8b5cf677;animation:p .8s infinite alternate
 }
-
-.bootGrid{
- position:absolute;
- inset:-50%;
- background:
- linear-gradient(#00d9ff12 1px,transparent 1px),
- linear-gradient(90deg,#00d9ff12 1px,transparent 1px);
- background-size:55px 55px;
- transform:perspective(500px) rotateX(60deg);
- animation:gridMove 4s linear infinite;
+.bs{font-size:10px;letter-spacing:4px;color:#999;margin-top:8px}
+.bar{
+height:4px;width:180px;background:#292936;border-radius:9px;
+margin:22px auto;overflow:hidden
 }
-
-@keyframes gridMove{
- from{transform:perspective(500px) rotateX(60deg) translateY(0)}
- to{transform:perspective(500px) rotateX(60deg) translateY(55px)}
+.bar i{
+display:block;height:100%;width:0;
+background:linear-gradient(90deg,var(--p),var(--pink));
+animation:load 2s linear
 }
-
-.scan{
- position:absolute;
- left:0;
- width:100%;
- height:2px;
- background:linear-gradient(90deg,transparent,#00d9ff,transparent);
- box-shadow:0 0 25px #00d9ff;
- animation:scan 2.2s linear infinite;
-}
-
-@keyframes scan{
- from{top:-5%}
- to{top:105%}
-}
-
-.bootCore{
- position:relative;
- width:270px;
- height:270px;
- display:flex;
- align-items:center;
- justify-content:center;
-}
-
-.ring{
- position:absolute;
- border-radius:50%;
- border:1px solid #00d9ff55;
- box-shadow:0 0 30px #00d9ff22;
-}
-
-.r1{width:250px;height:250px;animation:spin 7s linear infinite}
-.r2{width:205px;height:205px;border-style:dashed;animation:spinR 5s linear infinite}
-.r3{width:155px;height:155px;border-color:#7c5cff77;animation:spin 3s linear infinite}
-
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes spinR{to{transform:rotate(-360deg)}}
-
-.bootText{
- position:relative;
- text-align:center;
- z-index:3;
- animation:bootZoom 1.5s ease forwards;
-}
-
-.bootLogo{
- font-size:72px;
- font-weight:1000;
- letter-spacing:12px;
- color:white;
- text-shadow:
- 0 0 8px #fff,
- 0 0 25px #00d9ff,
- 0 0 55px #7c5cff;
-}
-
-.bootSub{
- font-size:10px;
- letter-spacing:5px;
- color:#8eeeff;
- margin-top:5px;
-}
-
-.bootStatus{
- margin-top:20px;
- font-size:10px;
- letter-spacing:3px;
- color:#78849b;
-}
-
-.bootBar{
- width:210px;
- height:3px;
- margin:13px auto 0;
- background:#202532;
- overflow:hidden;
-}
-
-.bootBar span{
- display:block;
- width:0;
- height:100%;
- background:linear-gradient(90deg,var(--accent),var(--accent2),var(--pink));
- animation:load 2.2s ease forwards;
-}
-
+@keyframes in{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes p{to{transform:scale(1.04);opacity:.65}}
 @keyframes load{to{width:100%}}
-
-@keyframes bootZoom{
- from{opacity:0;transform:scale(1.7);filter:blur(18px)}
- 65%{opacity:1;filter:blur(0)}
- to{transform:scale(1)}
-}
-
-/* ===== NAV ===== */
+@keyframes out{to{opacity:0;visibility:hidden}}
 
 header{
- position:sticky;
- top:0;
- z-index:500;
- background:#080a10dd;
- backdrop-filter:blur(18px);
- border-bottom:1px solid #ffffff0d;
+position:sticky;top:0;z-index:100;background:#101017ed;
+backdrop-filter:blur(12px);border-bottom:1px solid var(--line)
 }
-
 .nav{
- max-width:1250px;
- margin:auto;
- padding:13px 18px;
- display:flex;
- align-items:center;
- gap:14px;
+max-width:1220px;margin:auto;padding:13px 18px;
+display:flex;align-items:center;gap:14px
 }
-
 .logo{
- min-width:145px;
- font-size:25px;
- font-weight:1000;
- letter-spacing:2px;
- color:white;
+font-size:28px;font-weight:900;letter-spacing:2px;
+color:#b37cff;min-width:105px
 }
-
-.logo span{
- display:block;
- font-size:8px;
- letter-spacing:4px;
- color:var(--accent);
- margin-top:2px;
-}
-
-.search{
- flex:1;
- position:relative;
-}
-
+.logo small{display:block;font-size:7px;letter-spacing:2px;color:#777}
+.search{flex:1;position:relative}
 .search input{
- width:100%;
- padding:12px 43px 12px 15px;
- border:1px solid #303746;
- border-radius:12px;
- background:#11151e;
- color:white;
- outline:none;
+width:100%;padding:13px 42px 13px 16px;border-radius:11px;
+border:1px solid #353541;background:#1a1a23;color:#fff;outline:0
 }
-
-.search input:focus{
- border-color:var(--accent);
- box-shadow:0 0 18px #00d9ff18;
+.search span{
+position:absolute;right:15px;top:10px;font-size:20px;color:#aaa
 }
-
-.searchIcon{
- position:absolute;
- right:14px;
- top:9px;
- color:#8792a8;
- font-size:19px;
+.btn,.chip{
+background:#191921;border:1px solid #353541;color:#fff;
+border-radius:10px;padding:10px 13px;cursor:pointer;transition:.2s
 }
-
-.navBtn{
- border:1px solid #303746;
- background:#11151e;
- color:white;
- padding:10px 13px;
- border-radius:11px;
- cursor:pointer;
- transition:.2s;
- white-space:nowrap;
+.btn:hover,.chip:hover{
+border-color:var(--p);transform:translateY(-1px)
 }
-
-.navBtn:hover{
- border-color:var(--accent);
- transform:translateY(-2px);
- box-shadow:0 8px 25px #00d9ff12;
-}
-
 .count{
- display:inline-block;
- background:var(--accent);
- color:#001116;
- font-size:10px;
- font-weight:bold;
- border-radius:20px;
- padding:2px 6px;
- margin-left:4px;
+font-size:11px;background:var(--p);border-radius:10px;
+padding:2px 5px;margin-left:4px
 }
 
-/* ===== HERO ===== */
-
-.hero{
- max-width:1250px;
- margin:30px auto 0;
- padding:0 18px;
-}
-
+.hero{max-width:1220px;margin:26px auto 0;padding:0 18px}
 .heroBox{
- position:relative;
- min-height:360px;
- border:1px solid #26374a;
- border-radius:24px;
- overflow:hidden;
- display:flex;
- align-items:center;
- padding:45px;
- background:
- radial-gradient(circle at 80% 30%,#00d9ff1a,transparent 25%),
- radial-gradient(circle at 90% 80%,#7c5cff1b,transparent 30%),
- linear-gradient(125deg,#0d1725,#0d111b 55%,#120d1e);
+border:1px solid #403355;border-radius:20px;padding:32px;
+min-height:210px;
+background:linear-gradient(110deg,#24143b,#171323 58%,#101018);
+position:relative;overflow:hidden
 }
-
-.heroBox:before{
- content:"";
- position:absolute;
- width:420px;
- height:420px;
- right:-170px;
- top:-170px;
- border-radius:50%;
- border:1px solid #00d9ff20;
- box-shadow:0 0 80px #00d9ff12;
-}
-
 .heroBox:after{
- content:"";
- position:absolute;
- inset:0;
- background:linear-gradient(90deg,transparent 0,#00d9ff05 50%,transparent 100%);
- animation:heroSweep 5s linear infinite;
+content:"";position:absolute;width:300px;height:300px;
+right:-100px;top:-150px;border-radius:50%;
+background:#a855f733;filter:blur(20px)
 }
-
-@keyframes heroSweep{
- from{transform:translateX(-100%)}
- to{transform:translateX(100%)}
-}
-
-.heroContent{
- position:relative;
- z-index:2;
- max-width:700px;
-}
-
 .badge{
- display:inline-block;
- border:1px solid #00d9ff55;
- background:#00d9ff0c;
- color:#6cecff;
- border-radius:30px;
- padding:7px 12px;
- font-size:10px;
- letter-spacing:2px;
+display:inline-block;padding:7px 10px;border-radius:20px;
+background:#8b5cf622;border:1px solid #8b5cf655;
+color:#cbb2ff;font-size:12px
+}
+h1{font-size:43px;margin:13px 0 8px}
+.hero p{color:#aaa;max-width:620px;margin:0 0 20px;line-height:1.5}
+.heroBtn{
+background:linear-gradient(90deg,var(--p),var(--pink));
+border:0;color:#fff;padding:12px 18px;border-radius:10px;
+font-weight:bold;cursor:pointer
 }
 
-h1{
- font-size:clamp(42px,7vw,78px);
- line-height:.9;
- letter-spacing:-4px;
- margin:18px 0;
+.sectionHead,.chips,.grid,.features{
+max-width:1220px;margin:auto
 }
-
-.hero p{
- max-width:650px;
- color:#a7afc0;
- line-height:1.7;
-}
-
-.heroButtons{
- display:flex;
- gap:10px;
- margin-top:24px;
- flex-wrap:wrap;
-}
-
-.primary{
- border:0;
- padding:13px 18px;
- border-radius:11px;
- color:#001116;
- background:linear-gradient(90deg,#00d9ff,#63f5ff);
- font-weight:bold;
- cursor:pointer;
-}
-
-.secondary{
- border:1px solid #364153;
- padding:13px 18px;
- border-radius:11px;
- background:#10151f;
- color:white;
- cursor:pointer;
-}
-
-/* ===== SECTIONS ===== */
-
 .sectionHead{
- max-width:1250px;
- margin:auto;
- padding:30px 18px 12px;
- display:flex;
- justify-content:space-between;
- align-items:center;
+padding:25px 18px 10px;display:flex;
+justify-content:space-between;align-items:center
 }
-
 .sectionHead h2{margin:0}
-
-.sectionHead span{
- color:#7f899c;
- font-size:12px;
+.sectionHead span{color:#888;font-size:13px}
+.chips{
+padding:8px 18px 18px;display:flex;gap:8px;flex-wrap:wrap
 }
+.chip.active{background:var(--p);border-color:var(--p)}
 
-.categories{
- max-width:1250px;
- margin:auto;
- padding:8px 18px 18px;
- display:flex;
- flex-wrap:wrap;
- gap:8px;
+.grid{
+padding:0 18px 30px;
+display:grid;grid-template-columns:repeat(4,1fr);gap:16px
 }
-
-.category{
- border:1px solid #303746;
- background:#11151e;
- color:#b8c0cf;
- padding:9px 13px;
- border-radius:30px;
- cursor:pointer;
- transition:.2s;
-}
-
-.category:hover,
-.category.active{
- color:#001116;
- background:var(--accent);
- border-color:var(--accent);
-}
-
-/* ===== GALLERY ===== */
-
-.gallery{
- max-width:1250px;
- margin:auto;
- padding:0 18px 35px;
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:17px;
-}
-
 .card{
- position:relative;
- overflow:hidden;
- border:1px solid #252c3a;
- border-radius:17px;
- background:linear-gradient(180deg,#11151e,#0d1017);
- transition:.25s;
+background:linear-gradient(180deg,#191921,#14141b);
+border:1px solid #2b2b36;border-radius:14px;overflow:hidden;
+transition:.25s;box-shadow:0 8px 25px #0004
 }
-
 .card:hover{
- transform:translateY(-7px);
- border-color:#00d9ff55;
- box-shadow:0 18px 45px #0008;
+transform:translateY(-6px);border-color:#6d4bb2;
+box-shadow:0 15px 35px #0008
 }
-
-.imageBox{
- position:relative;
- overflow:hidden;
+.picWrap{position:relative;overflow:hidden}
+.pic{
+width:100%;height:220px;object-fit:cover;display:block;
+transition:.35s
 }
-
-.image{
- width:100%;
- height:220px;
- object-fit:cover;
- display:block;
- transition:.4s;
-}
-
-.card:hover .image{
- transform:scale(1.06);
-}
-
+.card:hover .pic{transform:scale(1.04)}
 .tag{
- position:absolute;
- left:10px;
- top:10px;
- padding:5px 8px;
- background:#05070bcc;
- border:1px solid #ffffff1c;
- border-radius:20px;
- font-size:9px;
- letter-spacing:1px;
- color:#bcefff;
+position:absolute;left:9px;top:9px;background:#0b0b10cc;
+border:1px solid #fff2;border-radius:20px;padding:5px 8px;font-size:10px
 }
-
-.cardBody{
- padding:13px;
+.info{padding:12px}
+.heart{
+float:right;border:0;background:none;color:#ddd;
+font-size:21px;cursor:pointer;transition:.2s
 }
-
-.cardTitle{
- font-weight:bold;
- margin-bottom:5px;
+.heart:hover{transform:scale(1.25)}
+.heart.on{color:#ff5b98}
+.title{font-weight:700;margin-right:30px}
+.meta{color:#888;font-size:12px;margin:6px 0 10px}
+.rating{color:#facc15;font-size:12px;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;align-items:center}
+.price{font-weight:800;font-size:17px}
+.add{
+background:var(--p);border:0;color:#fff;border-radius:8px;
+padding:9px 11px;cursor:pointer;transition:.2s
 }
-
-.meta{
- color:#788297;
- font-size:11px;
- margin-bottom:10px;
-}
-
-.rating{
- color:#ffd84d;
- font-size:12px;
-}
-
-.cardBottom{
- margin-top:13px;
- display:flex;
- justify-content:space-between;
- align-items:center;
-}
-
-.price{
- font-size:18px;
- font-weight:900;
-}
-
-.actions{
- display:flex;
- gap:6px;
-}
-
-.smallBtn{
- border:1px solid #343c4b;
- background:#151a24;
- color:white;
- border-radius:8px;
- padding:8px 10px;
- cursor:pointer;
-}
-
-.smallBtn:hover{
- border-color:var(--accent);
-}
-
-.smallBtn.active{
- background:#ff4f8b;
- border-color:#ff4f8b;
-}
-
-.empty{
- grid-column:1/-1;
- padding:70px;
- text-align:center;
- color:#7f899c;
-}
-
-/* ===== MEMBER UPLOADS ===== */
-
-.uploadGrid{
- max-width:1250px;
- margin:auto;
- padding:0 18px 30px;
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:17px;
-}
-
-.uploadCard{
- border:1px solid #252c3a;
- border-radius:16px;
- overflow:hidden;
- background:#10141d;
- position:relative;
-}
-
-.uploadCard img{
- width:100%;
- height:190px;
- object-fit:cover;
- display:block;
-}
-
-.uploadInfo{
- padding:12px;
-}
-
-.uploadInfo b{
- display:block;
-}
-
-.uploadInfo small{
- color:#7f899c;
-}
-
-.deleteBtn{
- position:absolute;
- right:9px;
- top:9px;
- width:28px;
- height:28px;
- border:1px solid #ffffff20;
- background:#05070dcc;
- color:white;
- border-radius:50%;
- cursor:pointer;
-}
-
-.deleteBtn:hover{
- color:#ff4f8b;
- border-color:#ff4f8b;
-}
-
-/* ===== FEATURES ===== */
+.add:hover{background:#a06df7;transform:scale(1.03)}
+.add.on{background:#2ecc71}
 
 .features{
- max-width:1250px;
- margin:auto;
- padding:0 18px 40px;
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:12px;
+padding:0 18px 35px;
+display:grid;grid-template-columns:repeat(4,1fr);gap:10px
 }
-
 .feature{
- border:1px solid #252c3a;
- background:#0f131b;
- border-radius:14px;
- padding:17px;
+border:1px solid var(--line);background:#15151d;
+border-radius:12px;padding:15px
 }
-
-.featureIcon{
- font-size:22px;
+.feature b{display:block;margin:5px 0}
+.feature span{color:#888;font-size:12px}
+footer{
+border-top:1px solid var(--line);text-align:center;
+color:#777;padding:25px
 }
-
-.feature b{
- display:block;
- margin:8px 0 5px;
-}
-
-.feature span{
- color:#7f899c;
- font-size:12px;
- line-height:1.5;
-}
-
-/* ===== MODALS ===== */
 
 .modal{
- position:fixed;
- inset:0;
- z-index:5000;
- display:none;
- place-items:center;
- padding:20px;
- background:#000b;
- backdrop-filter:blur(8px);
+display:none;position:fixed;inset:0;background:#000b;
+z-index:500;place-items:center;padding:20px
 }
-
 .modal.show{display:grid}
-
 .panel{
- width:min(560px,100%);
- max-height:85vh;
- overflow:auto;
- border:1px solid #30394a;
- border-radius:18px;
- padding:20px;
- background:#10141d;
- box-shadow:0 25px 80px #000b;
+width:min(520px,100%);max-height:80vh;overflow:auto;
+background:#181820;border:1px solid #3b3b49;
+border-radius:15px;padding:20px
 }
-
-.close{
- float:right;
+.close{float:right}
+.line{
+display:flex;justify-content:space-between;
+padding:12px 0;border-bottom:1px solid var(--line)
 }
-
-.form{
- display:flex;
- flex-direction:column;
- gap:12px;
- margin-top:15px;
+.membersPanel{width:min(560px,100%)}
+.membersGrid{
+display:grid;grid-template-columns:repeat(2,1fr);
+gap:12px;margin-top:16px
 }
-
-.form label{
- color:#929caf;
- font-size:12px;
-}
-
-.form input,
-.form textarea,
-.form select{
- width:100%;
- margin-top:5px;
- padding:11px;
- border:1px solid #303746;
- border-radius:9px;
- background:#0c1017;
- color:white;
- outline:none;
-}
-
-.form input:focus,
-.form textarea:focus,
-.form select:focus{
- border-color:var(--accent);
-}
-
-.preview{
- margin-top:10px;
-}
-
-.preview img{
- max-width:100%;
- max-height:240px;
- display:block;
- margin:auto;
- border-radius:10px;
-}
-
-/* ===== MEMBERS ===== */
-
-.members{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:10px;
- margin-top:18px;
-}
-
 .member{
- border:1px solid #28303e;
- border-radius:12px;
- padding:12px;
- display:flex;
- align-items:center;
- gap:12px;
- background:#141923;
+display:flex;align-items:center;gap:12px;
+background:#1e1e28;border:1px solid var(--line);
+border-radius:12px;padding:12px
 }
-
+.member b{display:block;font-size:14px}
+.member small{color:#888;font-size:11px}
 .avatar{
- width:42px;
- height:42px;
- min-width:42px;
- border-radius:50%;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,var(--accent2),var(--pink));
- font-weight:bold;
+width:42px;height:42px;min-width:42px;border-radius:50%;
+background:linear-gradient(135deg,var(--p),var(--pink));
+display:grid;place-items:center;font-weight:800;font-size:14px
+}
+.member>div:last-child{
+display:flex;flex-direction:column;align-items:flex-start;gap:4px
+}
+.uploadBtn{margin-top:4px;font-size:11px;padding:5px 8px}
+
+.cartLine{align-items:center}
+.cartRight{display:flex;align-items:center;gap:10px}
+.rm{
+background:none;border:0;color:#888;cursor:pointer;
+font-size:14px;transition:.2s
+}
+.rm:hover{color:#ff5b98;transform:scale(1.15)}
+.summaryTotal{
+display:flex;justify-content:space-between;padding:14px 0;
+font-size:16px;font-weight:800;
+border-top:1px solid var(--line);margin-top:6px
+}
+.checkoutBtn{width:100%;margin-top:10px;text-align:center}
+.checkoutForm{
+display:flex;flex-direction:column;gap:12px;margin-top:14px
+}
+.checkoutForm label{
+display:flex;flex-direction:column;gap:5px;
+font-size:12px;color:#aaa
+}
+.checkoutForm input,
+.checkoutForm select,
+.checkoutForm textarea{
+background:#1a1a23;border:1px solid #353541;
+border-radius:9px;padding:10px 12px;color:#fff;
+font:14px Arial,sans-serif;outline:0
+}
+.checkoutForm textarea{
+resize:vertical;min-height:60px
+}
+.checkoutForm .formRow{display:flex;gap:10px}
+.checkoutForm .formRow>button{flex:1;text-align:center}
+.placeOrderBtn{border:0;color:#fff}
+.confirmBox{text-align:center}
+.confirmIcon{
+width:60px;height:60px;border-radius:50%;
+background:#2ecc71;display:grid;place-items:center;
+margin:0 auto 14px;font-size:28px;font-weight:900
+}
+.confirmBox .line{text-align:left}
+.confirmBox .heroBtn{width:100%;margin-top:14px;text-align:center}
+
+.uploadsGrid{
+padding:0 18px 10px;display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;max-width:1220px;margin:auto
+}
+.uCard{
+position:relative;background:linear-gradient(180deg,#191921,#14141b);
+border:1px solid #2b2b36;border-radius:14px;overflow:hidden
+}
+.uCard img{
+width:100%;height:180px;object-fit:cover;display:block
+}
+.uInfo{padding:10px 12px}
+.uInfo b{display:block;font-size:14px}
+.uInfo small{color:#888;font-size:11px}
+.uCard .uDel{
+position:absolute;top:8px;right:8px;
+background:#0b0b10cc;border:1px solid #fff2;
+border-radius:50%;width:26px;height:26px;
+color:#fff;cursor:pointer
+}
+.uCard .uDel:hover{
+color:#ff5b98;border-color:#ff5b98
+}
+#uPreviewWrap img{
+width:100%;border-radius:10px;margin-top:4px;
+max-height:220px;object-fit:cover
+}
+.empty{
+grid-column:1/-1;text-align:center;padding:70px;color:#999
 }
 
-.member small{
- color:#7f899c;
- display:block;
- margin-top:3px;
+@media(max-width:900px){
+.grid{grid-template-columns:repeat(3,1fr)}
+.features{grid-template-columns:repeat(2,1fr)}
+.uploadsGrid{grid-template-columns:repeat(3,1fr)}
 }
-
-/* ===== CART/WISHLIST ===== */
-
-.listLine{
- display:flex;
- justify-content:space-between;
- gap:15px;
- padding:13px 0;
- border-bottom:1px solid #252c3a;
+@media(max-width:650px){
+.nav{flex-wrap:wrap}
+.logo{min-width:auto}
+.search{order:3;flex-basis:100%}
+.heroBox{padding:25px 20px}
+h1{font-size:32px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pic{height:175px}
+.features{grid-template-columns:1fr 1fr}
+.uploadsGrid{grid-template-columns:repeat(2,1fr)}
 }
-
-.total{
- display:flex;
- justify-content:space-between;
- font-size:18px;
- font-weight:bold;
- padding-top:15px;
-}
-
-/* ===== FOOTER ===== */
-
-footer{
- border-top:1px solid #202633;
- text-align:center;
- color:#687286;
- padding:25px;
- font-size:12px;
-}
-
-/* ===== RESPONSIVE ===== */
-
-@media(max-width:950px){
- .gallery,
- .uploadGrid{grid-template-columns:repeat(3,1fr)}
- .features{grid-template-columns:repeat(2,1fr)}
-}
-
-@media(max-width:700px){
- .nav{flex-wrap:wrap}
- .logo{min-width:auto}
- .search{order:5;flex-basis:100%}
- .heroBox{padding:30px 22px}
- .gallery,
- .uploadGrid{grid-template-columns:repeat(2,1fr);gap:10px}
- .image{height:175px}
- .members{grid-template-columns:1fr}
-}
-
-@media(max-width:450px){
- .navBtn{padding:9px}
- .heroBox{min-height:390px}
- h1{font-size:43px}
- .gallery,
- .uploadGrid,
- .features{grid-template-columns:1fr}
+@media(max-width:500px){
+.membersGrid{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<!-- BOOT -->
 <div id="boot">
- <div class="bootGrid"></div>
- <div class="scan"></div>
-
- <div class="bootCore">
-  <div class="ring r1"></div>
-  <div class="ring r2"></div>
-  <div class="ring r3"></div>
-
-  <div class="bootText">
-   <div class="bootLogo">KGGT</div>
-   <div class="bootSub">SKETCH SHOP</div>
-   <div class="bootStatus">INITIALIZING CREATIVE MARKET</div>
-   <div class="bootBar"><span></span></div>
-  </div>
- </div>
+<div class="bb">
+<div class="bl">KGGT</div>
+<div class="bs">SKETCH SHOP</div>
+<div class="bar"><i></i></div>
+</div>
 </div>
 
 <header>
- <div class="nav">
+<div class="nav">
+<div class="logo">KGGT<small>SKETCH SHOP</small></div>
 
-  <div class="logo">
-   KGGT
-   <span>SKETCH SHOP</span>
-  </div>
+<div class="search">
+<input id="search" placeholder="Search sketches, anime, cars, nature...">
+<span>⌕</span>
+</div>
 
-  <div class="search">
-   <input id="search" placeholder="Search sketches, anime, cars, nature...">
-   <span class="searchIcon">⌕</span>
-  </div>
+<button class="btn" id="wishBtn">
+♡ Wishlist <b class="count" id="wc">0</b>
+</button>
 
-  <button class="navBtn" id="wishBtn">
-   ♡ Wishlist <b class="count" id="wishCount">0</b>
-  </button>
+<button class="btn" id="cartBtn">
+🛒 Cart <b class="count" id="cc">0</b>
+</button>
 
-  <button class="navBtn" id="cartBtn">
-   🛒 Cart <b class="count" id="cartCount">0</b>
-  </button>
-
-  <button class="navBtn" id="membersBtn">
-   👥 Members
-  </button>
-
- </div>
+<button class="btn" id="membersBtn">👥 Members</button>
+</div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
- <div class="heroBox">
-
-  <div class="heroContent">
-
-   <span class="badge">KGGT DIGITAL ART MARKET</span>
-
-   <h1>
-    DRAW.<br>
-    DREAM.<br>
-    DISCOVER.
-   </h1>
-
-   <p>
-    Explore anime, cars, animals, portraits, nature, fantasy and
-    sports artwork inside the KGGT creative collection.
-   </p>
-
-   <div class="heroButtons">
-    <button class="primary" id="exploreBtn">
-     EXPLORE ARTWORK ✦
-    </button>
-
-    <button class="secondary" id="uploadHeroBtn">
-     📤 UPLOAD ARTWORK
-    </button>
-   </div>
-
-  </div>
-
- </div>
+<div class="heroBox">
+<span class="badge">20 CURATED SKETCHES</span>
+<h1>Sketch something amazing.</h1>
+<p>
+Explore anime, cars, animals, portraits, nature, fantasy and sports artwork —
+all in one clean KGGT collection.
+</p>
+<button class="heroBtn" id="explore">Explore sketches ✦</button>
+</div>
 </section>
 
-<!-- POPULAR -->
 <div class="sectionHead">
- <h2>Featured Collection</h2>
- <span id="resultCount">20 drawings</span>
+<h2>Popular sketches</h2>
+<span id="resultCount">20 drawings</span>
 </div>
 
-<div class="categories">
- <button class="category active" data-cat="All">All</button>
- <button class="category" data-cat="Anime">Anime</button>
- <button class="category" data-cat="Cars">Cars</button>
- <button class="category" data-cat="Animals">Animals</button>
- <button class="category" data-cat="Nature">Nature</button>
- <button class="category" data-cat="Portraits">Portraits</button>
- <button class="category" data-cat="Fantasy">Fantasy</button>
- <button class="category" data-cat="Sports">Sports</button>
+<div class="chips">
+<button class="chip active" data-cat="All">All</button>
+<button class="chip" data-cat="Anime">Anime</button>
+<button class="chip" data-cat="Cars">Cars</button>
+<button class="chip" data-cat="Animals">Animals</button>
+<button class="chip" data-cat="Nature">Nature</button>
+<button class="chip" data-cat="Portraits">Portraits</button>
+<button class="chip" data-cat="Fantasy">Fantasy</button>
+<button class="chip" data-cat="Sports">Sports</button>
 </div>
 
-<main id="gallery" class="gallery"></main>
+<main id="gallery" class="grid"></main>
 
-<!-- UPLOADS -->
 <div class="sectionHead">
- <h2>
-  Community Art
-  <b class="count" id="uploadCount">0</b>
- </h2>
-
- <button class="navBtn" id="uploadBtn">
-  📤 Upload Artwork
- </button>
+<h2>Member Uploads <b class="count" id="uploadCount">0</b></h2>
+<button class="btn" id="openUploadBtn">📤 Upload artwork</button>
 </div>
 
-<div id="uploadGrid" class="uploadGrid"></div>
+<div id="uploadsGrid" class="uploadsGrid"></div>
 
-<!-- FEATURES -->
 <section class="features">
-
- <div class="feature">
-  <div class="featureIcon">🎨</div>
-  <b>Creative Collection</b>
-  <span>Explore different styles and categories of artwork.</span>
- </div>
-
- <div class="feature">
-  <div class="featureIcon">♡</div>
-  <b>Personal Wishlist</b>
-  <span>Keep your favourite KGGT artworks saved locally.</span>
- </div>
-
- <div class="feature">
-  <div class="featureIcon">🛒</div>
-  <b>Smart Cart</b>
-  <span>Add artwork to your personal collection cart.</span>
- </div>
-
- <div class="feature">
-  <div class="featureIcon">⚡</div>
-  <b>Self Contained</b>
-  <span>Your uploads are stored locally in this browser.</span>
- </div>
-
+<div class="feature">🏠<b>Home Delivery</b><span>Need delivery help? Contact KGGT.</span></div>
+<div class="feature">✦<b>20 Curated Artworks</b><span>A focused collection.</span></div>
+<div class="feature">♡<b>Wishlist</b><span>Save sketches you love.</span></div>
+<div class="feature">🛒<b>Easy Cart</b><span>Add your favourites instantly.</span></div>
 </section>
 
-<footer>
- © 2026 KGGT · Sketch your imagination.
-</footer>
+<footer>© 2026 KGGT · Sketch your imagination.</footer>
 
-<!-- MEMBERS MODAL -->
+<!-- MEMBERS -->
 <div class="modal" id="membersModal">
- <div class="panel">
+<div class="panel membersPanel">
+<button class="btn close" id="membersClose">✕</button>
+<span class="badge">KGGT TEAM</span>
+<h2>Our Members</h2>
 
-  <button class="navBtn close" id="membersClose">✕</button>
+<div class="membersGrid">
 
-  <span class="badge">KGGT TEAM</span>
-
-  <h2>Our Members</h2>
-
-  <p style="color:#7f899c">
-   Meet the people behind KGGT Sketch Shop.
-  </p>
-
-  <div class="members">
-
-   <div class="member">
-    <div class="avatar">T</div>
-    <div>
-     <b>Tanish</b>
-     <small>Director & Founder</small>
-    </div>
-   </div>
-
-   <div class="member">
-    <div class="avatar">K</div>
-    <div>
-     <b>Kartik</b>
-     <small>CEO</small>
-    </div>
-   </div>
-
-   <div class="member">
-    <div class="avatar">GS</div>
-    <div>
-     <b>Garvit Singh</b>
-     <small>Artist</small>
-    </div>
-   </div>
-
-   <div class="member">
-    <div class="avatar">GT</div>
-    <div>
-     <b>Garvit Tiwari</b>
-     <small>Artist</small>
-    </div>
-   </div>
-
-   <div class="member">
-    <div class="avatar">A</div>
-    <div>
-     <b>Afnan</b>
-     <small>Business Partner</small>
-    </div>
-   </div>
-
-  </div>
-
- </div>
+<div class="member">
+<div class="avatar">T</div>
+<div>
+<b>Tanish</b>
+<small>Director & Founder</small>
+<button class="btn uploadBtn" data-name="Tanish">📤 Upload</button>
+</div>
 </div>
 
-<!-- UPLOAD MODAL -->
+<div class="member">
+<div class="avatar">K</div>
+<div>
+<b>Kartik</b>
+<small>CEO</small>
+<button class="btn uploadBtn" data-name="Kartik">📤 Upload</button>
+</div>
+</div>
+
+<div class="member">
+<div class="avatar">GS</div>
+<div>
+<b>Garvit Singh</b>
+<small>Artist</small>
+<button class="btn uploadBtn" data-name="Garvit Singh">📤 Upload</button>
+</div>
+</div>
+
+<div class="member">
+<div class="avatar">GT</div>
+<div>
+<b>Garvit Tiwari</b>
+<small>Artist</small>
+<button class="btn uploadBtn" data-name="Garvit Tiwari">📤 Upload</button>
+</div>
+</div>
+
+<div class="member">
+<div class="avatar">A</div>
+<div>
+<b>Afnan</b>
+<small>Business Partner</small>
+<button class="btn uploadBtn" data-name="Afnan">📤 Upload</button>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- PASSWORD + UPLOAD -->
 <div class="modal" id="uploadModal">
- <div class="panel">
+<div class="panel">
 
-  <button class="navBtn close" id="uploadClose">✕</button>
+<button class="btn close" id="uploadClose">✕</button>
 
-  <span class="badge">CREATIVE UPLOAD</span>
-  <h2>Upload Artwork</h2>
+<div id="passwordScreen">
 
-  <p style="color:#7f899c;font-size:12px">
-   Artwork is saved locally in this browser.
-  </p>
+<span class="badge">ADMIN ACCESS</span>
+<h2>🔐 Upload Artwork</h2>
 
-  <form class="form" id="uploadForm">
+<p style="color:#999">
+Enter the password to access artwork uploading.
+</p>
 
-   <label>
-    Artwork Title
-    <input id="uploadTitle" required placeholder="Example: Anime Warrior">
-   </label>
+<form id="passwordForm" class="checkoutForm">
 
-   <label>
-    Uploaded By
-    <input id="uploadBy" required placeholder="Your name">
-   </label>
+<label>
+Password
+<input
+id="uploadPassword"
+type="password"
+placeholder="Enter password"
+autocomplete="off"
+required
+>
+</label>
 
-   <label>
-    Category
-    <select id="uploadCategory">
-     <option>Anime</option>
-     <option>Cars</option>
-     <option>Animals</option>
-     <option>Nature</option>
-     <option>Portraits</option>
-     <option>Fantasy</option>
-     <option>Sports</option>
-     <option>Other</option>
-    </select>
-   </label>
+<button type="submit" class="heroBtn">
+Unlock Upload
+</button>
 
-   <label>
-    Price
-    <input id="uploadPrice" type="number" min="0" placeholder="₹0">
-   </label>
+</form>
 
-   <label>
-    Artwork Image
-    <input id="uploadFile" type="file" accept="image/*" required>
-   </label>
+<p id="passwordError"
+style="display:none;color:#ff5b98;font-size:13px">
+Incorrect password.
+</p>
 
-   <div class="preview" id="preview"></div>
+</div>
 
-   <button class="primary" type="submit">
-    POST ARTWORK ✦
-   </button>
+<div id="uploadScreen" style="display:none">
 
-  </form>
+<h2>📤 Upload Artwork</h2>
 
- </div>
+<p style="color:#999">
+Shared images are saved in this browser.
+</p>
+
+<form id="uploadForm" class="checkoutForm">
+
+<label>
+Title
+<input required id="uTitle" placeholder="Artwork title">
+</label>
+
+<label>
+Uploaded by
+<input required id="uBy" placeholder="Your name">
+</label>
+
+<label>
+Image
+<input required id="uFile" type="file" accept="image/*">
+</label>
+
+<div id="uPreviewWrap"></div>
+
+<button type="submit" class="heroBtn">
+Post Artwork
+</button>
+
+</form>
+
+</div>
+
+</div>
 </div>
 
 <!-- GENERAL MODAL -->
-<div class="modal" id="mainModal">
- <div class="panel">
-
-  <button class="navBtn close" id="mainClose">✕</button>
-
-  <h2 id="modalTitle"></h2>
-
-  <div id="modalBody"></div>
-
- </div>
+<div class="modal" id="modal">
+<div class="panel">
+<button class="btn close" id="close">✕</button>
+<h2 id="modalTitle"></h2>
+<div id="modalBody"></div>
+</div>
 </div>
 
 <script>
 
-/* =========================================
-   PRODUCT DATA
-========================================= */
+/* ================= PRODUCTS ================= */
 
 const products = [
 
- {id:1,title:"Anime Warrior",cat:"Anime",price:299,rating:4.8,
- image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=900&q=80"},
+{id:1,title:"Anime Warrior",cat:"Anime",price:299,rating:4.8,image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80"},
 
- {id:2,title:"Neon Racer",cat:"Cars",price:399,rating:4.9,
- image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80"},
+{id:2,title:"Neon Racer",cat:"Cars",price:399,rating:4.9,image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80"},
 
- {id:3,title:"Wolf Sketch",cat:"Animals",price:249,rating:4.7,
- image:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=900&q=80"},
+{id:3,title:"Wolf Sketch",cat:"Animals",price:249,rating:4.7,image:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80"},
 
- {id:4,title:"Mountain Escape",cat:"Nature",price:199,rating:4.8,
- image:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"},
+{id:4,title:"Mountain Escape",cat:"Nature",price:199,rating:4.8,image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80"},
 
- {id:5,title:"Portrait Study",cat:"Portraits",price:349,rating:4.9,
- image:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"},
+{id:5,title:"Portrait Study",cat:"Portraits",price:349,rating:4.9,image:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80"},
 
- {id:6,title:"Dragon Art",cat:"Fantasy",price:399,rating:4.7,
- image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80"},
+{id:6,title:"Fantasy Castle",cat:"Fantasy",price:449,rating:4.9,image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80"},
 
- {id:7,title:"Football Star",cat:"Sports",price:249,rating:4.8,
- image:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=900&q=80"},
+{id:7,title:"Football Art",cat:"Sports",price:249,rating:4.7,image:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80"},
 
- {id:8,title:"Samurai Sketch",cat:"Anime",price:299,rating:4.9,
- image:"https://images.unsplash.com/photo-1614583224978-fd5f9e4b2f9f?auto=format&fit=crop&w=900&q=80"},
+{id:8,title:"JDM Legend",cat:"Cars",price:399,rating:4.8,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80"},
 
- {id:9,title:"Supercar",cat:"Cars",price:449,rating:4.7,
- image:"https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=900&q=80"},
+{id:9,title:"Eagle Vision",cat:"Animals",price:299,rating:4.8,image:"https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=800&q=80"},
 
- {id:10,title:"Fox Drawing",cat:"Animals",price:249,rating:4.8,
- image:"https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80"},
+{id:10,title:"Forest Dream",cat:"Nature",price:229,rating:4.7,image:"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80"},
 
- {id:11,title:"Forest Cabin",cat:"Nature",price:199,rating:4.9,
- image:"https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=900&q=80"},
+{id:11,title:"Samurai Spirit",cat:"Anime",price:329,rating:4.9,image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80"},
 
- {id:12,title:"Fantasy Knight",cat:"Fantasy",price:349,rating:4.7,
- image:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=900&q=80"},
+{id:12,title:"Dragon Realm",cat:"Fantasy",price:499,rating:4.9,image:"https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80"},
 
- {id:13,title:"Space Hero",cat:"Anime",price:299,rating:4.8,
- image:"https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80"},
+{id:13,title:"Space Hero",cat:"Fantasy",price:379,rating:4.8,image:"https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=800&q=80"},
 
- {id:14,title:"Tiger Study",cat:"Animals",price:279,rating:4.9,
- image:"https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=900&q=80"},
+{id:14,title:"Tiger Study",cat:"Animals",price:279,rating:4.9,image:"https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=800&q=80"},
 
- {id:15,title:"City Lights",cat:"Nature",price:229,rating:4.7,
- image:"https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=80"},
+{id:15,title:"City Lights",cat:"Nature",price:229,rating:4.7,image:"https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80"},
 
- {id:16,title:"Classic Portrait",cat:"Portraits",price:349,rating:4.8,
- image:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"},
+{id:16,title:"Classic Portrait",cat:"Portraits",price:349,rating:4.8,image:"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80"},
 
- {id:17,title:"Ocean View",cat:"Nature",price:199,rating:4.9,
- image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"},
+{id:17,title:"Ocean View",cat:"Nature",price:199,rating:4.9,image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"},
 
- {id:18,title:"Dark Fantasy",cat:"Fantasy",price:379,rating:4.8,
- image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80"},
+{id:18,title:"Basketball Sketch",cat:"Sports",price:249,rating:4.7,image:"https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80"},
 
- {id:19,title:"Racing Legend",cat:"Cars",price:429,rating:4.9,
- image:"https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80"},
+{id:19,title:"Cat Sketch",cat:"Animals",price:229,rating:4.8,image:"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80"},
 
- {id:20,title:"Wild Eagle",cat:"Animals",price:259,rating:4.8,
- image:"https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80"}
+{id:20,title:"Motorbike Study",cat:"Cars",price:379,rating:4.9,image:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80"}
 
 ];
 
 
-/* =========================================
-   LOCAL STORAGE
-========================================= */
+/* ================= STORAGE ================= */
 
-let wishlist =
- new Set(JSON.parse(localStorage.getItem("kggtWish") || "[]"));
+let wishlist = new Set(
+JSON.parse(localStorage.getItem("kggtWish") || "[]")
+);
 
-let cart =
- new Set(JSON.parse(localStorage.getItem("kggtCart") || "[]"));
+let cart = new Set(
+JSON.parse(localStorage.getItem("kggtCart") || "[]")
+);
 
-let uploads =
- JSON.parse(localStorage.getItem("kggtUploads") || "[]");
+let uploads = JSON.parse(
+localStorage.getItem("kggtUploads") || "[]"
+);
 
-let activeCategory="All";
+let pendingImg = null;
+let active = "All";
 
-
-/* =========================================
-   HELPERS
-========================================= */
 
 const $ = id => document.getElementById(id);
 
-function saveState(){
 
- localStorage.setItem(
-  "kggtWish",
-  JSON.stringify([...wishlist])
- );
+/* ================= SAVE ================= */
 
- localStorage.setItem(
-  "kggtCart",
-  JSON.stringify([...cart])
- );
+function save(){
 
-}
+localStorage.setItem(
+"kggtWish",
+JSON.stringify([...wishlist])
+);
 
-function updateCounts(){
+localStorage.setItem(
+"kggtCart",
+JSON.stringify([...cart])
+);
 
- $("wishCount").textContent=wishlist.size;
- $("cartCount").textContent=cart.size;
- $("uploadCount").textContent=uploads.length;
-
-}
-
-function escapeHTML(value){
-
- return String(value).replace(/[&<>"']/g,char=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- }[char]));
+counts();
 
 }
 
 
-/* =========================================
-   RENDER PRODUCTS
-========================================= */
+function counts(){
+
+$("wc").textContent = wishlist.size;
+$("cc").textContent = cart.size;
+
+}
+
+
+/* ================= RENDER ================= */
 
 function render(){
 
- const query=$("search").value.trim().toLowerCase();
+const q = $("search").value.trim().toLowerCase();
 
- const list=products.filter(p=>{
+const list = products.filter(p =>
+(active === "All" || p.cat === active) &&
+(!q || (p.title+" "+p.cat).toLowerCase().includes(q))
+);
 
-  const categoryOK=
-   activeCategory==="All" ||
-   p.cat===activeCategory;
+$("resultCount").textContent =
+list.length + " drawing" +
+(list.length === 1 ? "" : "s");
 
-  const searchOK=
-   !query ||
-   (p.title+" "+p.cat)
-   .toLowerCase()
-   .includes(query);
+$("gallery").innerHTML = list.length ?
 
-  return categoryOK && searchOK;
+list.map(p => `
 
- });
+<article class="card">
 
- $("resultCount").textContent=
-  list.length+" drawing"+(list.length===1?"":"s");
+<div class="picWrap">
 
- if(!list.length){
+<img
+class="pic"
+src="${p.image}"
+alt="${p.title}"
+loading="lazy"
+>
 
-  $("gallery").innerHTML=
-   `<div class="empty">
-    <b>No artwork found.</b><br>
-    Try another category or search.
-   </div>`;
+<span class="tag">${p.cat}</span>
 
-  return;
+</div>
 
- }
+<div class="info">
 
- $("gallery").innerHTML=list.map(p=>`
+<button class="heart ${wishlist.has(p.id) ? "on" : ""}">
+${wishlist.has(p.id) ? "♥" : "♡"}
+</button>
 
-  <article class="card">
+<div class="title">${p.title}</div>
 
-   <div class="imageBox">
+<div class="meta">
+Hand-drawn digital artwork
+</div>
 
-    <img
-     class="image"
-     src="${p.image}"
-     alt="${escapeHTML(p.title)}"
-     loading="lazy"
-    >
+<div class="rating">
+★ ${p.rating}
+<span style="color:#777"> · KGGT Pick</span>
+</div>
 
-    <span class="tag">${p.cat}</span>
+<div class="row">
 
-   </div>
+<span class="price">
+₹${p.price}
+</span>
 
-   <div class="cardBody">
+<button class="add ${cart.has(p.id) ? "on" : ""}">
+${cart.has(p.id) ? "Added ✓" : "Add to cart"}
+</button>
 
-    <div class="cardTitle">
-     ${escapeHTML(p.title)}
-    </div>
+</div>
 
-    <div class="meta">
-     Hand-drawn digital artwork · KGGT Collection
-    </div>
+</div>
 
-    <div class="rating">
-     ★ ${p.rating}
-    </div>
+</article>
 
-    <div class="cardBottom">
+`).join("")
 
-     <span class="price">
-      ₹${p.price}
-     </span>
+:
 
-     <div class="actions">
-
-      <button
-       class="smallBtn ${wishlist.has(p.id)?"active":""}"
-       onclick="toggleWish(${p.id})">
-       ${wishlist.has(p.id)?"♥":"♡"}
-      </button>
-
-      <button
-       class="smallBtn"
-       onclick="toggleCart(${p.id})">
-       ${cart.has(p.id)?"✓":"+"}
-      </button>
-
-     </div>
-
-    </div>
-
-   </div>
-
-  </article>
-
- `).join("");
-
-}
+`<div class="empty">
+<b>No sketches found.</b>
+<br>
+Try another search or category.
+</div>`;
 
 
-/* =========================================
-   WISHLIST
-========================================= */
+document.querySelectorAll(".card").forEach((card,i)=>{
 
-function toggleWish(id){
+const p = list[i];
 
- if(wishlist.has(id))
-  wishlist.delete(id);
- else
-  wishlist.add(id);
+card.querySelector(".heart").onclick = () => {
 
- saveState();
- updateCounts();
- render();
+wishlist.has(p.id)
+? wishlist.delete(p.id)
+: wishlist.add(p.id);
+
+save();
+render();
+
+};
+
+
+card.querySelector(".add").onclick = () => {
+
+cart.has(p.id)
+? cart.delete(p.id)
+: cart.add(p.id);
+
+save();
+render();
+
+};
+
+});
 
 }
 
 
-/* =========================================
-   CART
-========================================= */
+/* ================= CART / WISHLIST ================= */
 
-function toggleCart(id){
+function cartItems(){
 
- if(cart.has(id))
-  cart.delete(id);
- else
-  cart.add(id);
-
- saveState();
- updateCounts();
- render();
+return [...cart]
+.map(id => products.find(p => p.id === id))
+.filter(Boolean);
 
 }
 
 
-/* =========================================
-   MODALS
-========================================= */
+function openList(type){
 
-function openModal(title,body){
+type === "Wishlist"
+? renderWishlist()
+: renderCart();
 
- $("modalTitle").textContent=title;
- $("modalBody").innerHTML=body;
- $("mainModal").classList.add("show");
-
-}
-
-function closeMain(){
-
- $("mainModal").classList.remove("show");
+$("modal").classList.add("show");
 
 }
 
 
-/* =========================================
-   WISHLIST
-========================================= */
+function renderWishlist(){
 
-function showWishlist(){
+$("modalTitle").textContent = "Wishlist";
 
- const items=
-  [...wishlist]
-  .map(id=>products.find(p=>p.id===id))
-  .filter(Boolean);
+const a = [...wishlist]
+.map(id => products.find(p => p.id === id))
+.filter(Boolean);
 
- let html="";
+$("modalBody").innerHTML = a.length
 
- if(!items.length){
+? a.map(p => `
+<div class="line">
+<span>
+${p.title}
+<br>
+<small style="color:#888">${p.cat}</small>
+</span>
+<b>₹${p.price}</b>
+</div>
+`).join("")
 
-  html="<p style='color:#7f899c'>Your wishlist is empty.</p>";
-
- }else{
-
-  html=items.map(p=>`
-
-   <div class="listLine">
-    <span>
-     ${escapeHTML(p.title)}
-     <small style="display:block;color:#7f899c">
-      ${p.cat}
-     </small>
-    </span>
-
-    <b>₹${p.price}</b>
-   </div>
-
-  `).join("");
-
- }
-
- openModal("Wishlist",html);
+: "<p>Your wishlist is empty.</p>";
 
 }
 
 
-/* =========================================
-   CART
-========================================= */
+function renderCart(){
 
-function showCart(){
+$("modalTitle").textContent = "Cart";
 
- const items=
-  [...cart]
-  .map(id=>products.find(p=>p.id===id))
-  .filter(Boolean);
+let a = cartItems();
 
- if(!items.length){
+if(!a.length){
 
-  openModal(
-   "Cart",
-   "<p style='color:#7f899c'>Your cart is empty.</p>"
-  );
+$("modalBody").innerHTML =
+"<p>Your cart is empty.</p>";
 
-  return;
- }
-
- const total=
-  items.reduce((sum,p)=>sum+p.price,0);
-
- const lines=items.map(p=>`
-
-  <div class="listLine">
-
-   <span>
-    ${escapeHTML(p.title)}
-    <small style="display:block;color:#7f899c">
-     ${p.cat}
-    </small>
-   </span>
-
-   <b>₹${p.price}</b>
-
-  </div>
-
- `).join("");
-
- openModal(
-  "Your Cart",
-  lines+
-  `<div class="total">
-   <span>Total</span>
-   <span>₹${total}</span>
-  </div>
-  <button
-   class="primary"
-   style="width:100%;margin-top:15px"
-   onclick="checkout()">
-   CONTINUE
-  </button>`
- );
+return;
 
 }
 
+const total =
+a.reduce((s,p)=>s+p.price,0);
 
-/* =========================================
-   CHECKOUT
-========================================= */
+$("modalBody").innerHTML =
 
-function checkout(){
+a.map(p => `
 
- openModal(
-  "KGGT Order",
-  `
-   <p style="color:#8c94a8">
-    This demo prepares your order locally.
-   </p>
+<div class="line cartLine">
 
-   <div class="form">
+<span>
+${p.title}
+<br>
+<small style="color:#888">${p.cat}</small>
+</span>
 
-    <label>
-     Name
-     <input id="buyerName" placeholder="Your name">
-    </label>
+<span class="cartRight">
 
-    <label>
-     Contact
-     <input id="buyerContact" placeholder="Email or phone">
-    </label>
+<b>₹${p.price}</b>
 
-    <button
-     class="primary"
-     onclick="finishOrder()">
-     PLACE REQUEST
-    </button>
+<button
+class="rm"
+data-id="${p.id}"
+>
+✕
+</button>
 
-   </div>
-  `
- );
+</span>
 
-}
+</div>
 
-function finishOrder(){
+`).join("")
 
- const name=$("buyerName").value.trim();
++
 
- if(!name){
+`
 
-  alert("Please enter your name.");
-  return;
+<div class="summaryTotal">
+<span>Total</span>
+<b>₹${total}</b>
+</div>
 
- }
+<button class="heroBtn checkoutBtn" id="toCheckout">
+Proceed to Checkout
+</button>
 
- cart.clear();
- saveState();
- updateCounts();
+`;
 
- openModal(
-  "Request Created ✓",
-  `
-   <div style="text-align:center;padding:20px">
-    <div style="
-     font-size:50px;
-     margin-bottom:10px;
-    ">✓</div>
+$("modalBody")
+.querySelectorAll(".rm")
+.forEach(b => {
 
-    <h3>Thank you, ${escapeHTML(name)}!</h3>
+b.onclick = () => {
 
-    <p style="color:#8c94a8">
-     Your KGGT artwork request has been saved.
-    </p>
-   </div>
-  `
- );
+cart.delete(Number(b.dataset.id));
 
-}
+save();
 
+renderCart();
 
-/* =========================================
-   UPLOAD SYSTEM
-========================================= */
-
-function openUpload(){
-
- $("uploadModal").classList.add("show");
-
-}
-
-function closeUpload(){
-
- $("uploadModal").classList.remove("show");
-
-}
-
-$("uploadFile").addEventListener("change",function(){
-
- const file=this.files[0];
-
- if(!file)return;
-
- const reader=new FileReader();
-
- reader.onload=e=>{
-
-  $("preview").innerHTML=
-   `<img src="${e.target.result}" alt="Preview">`;
-
- };
-
- reader.readAsDataURL(file);
+};
 
 });
 
 
-$("uploadForm").addEventListener("submit",function(e){
+$("toCheckout").onclick = renderCheckout;
 
- e.preventDefault();
-
- const file=$("uploadFile").files[0];
-
- if(!file)return;
-
- const reader=new FileReader();
-
- reader.onload=e=>{
-
-  const item={
-
-   id:Date.now(),
-
-   title:$("uploadTitle").value.trim(),
-
-   by:$("uploadBy").value.trim(),
-
-   category:$("uploadCategory").value,
-
-   price:Number($("uploadPrice").value)||0,
-
-   image:e.target.result,
-
-   date:new Date().toLocaleDateString()
-
-  };
-
-  uploads.unshift(item);
-
-  localStorage.setItem(
-   "kggtUploads",
-   JSON.stringify(uploads)
-  );
-
-  $("uploadForm").reset();
-  $("preview").innerHTML="";
-
-  closeUpload();
-
-  renderUploads();
-  updateCounts();
-
- };
-
- reader.readAsDataURL(file);
-
-});
+}
 
 
-/* =========================================
-   RENDER UPLOADS
-========================================= */
+/* ================= CHECKOUT ================= */
+
+function renderCheckout(){
+
+let a = cartItems();
+
+if(!a.length){
+
+renderCart();
+return;
+
+}
+
+const total =
+a.reduce((s,p)=>s+p.price,0);
+
+$("modalTitle").textContent = "Checkout";
+
+$("modalBody").innerHTML = `
+
+${a.map(p => `
+<div class="line">
+<span>${p.title}</span>
+<b>₹${p.price}</b>
+</div>
+`).join("")}
+
+<div class="summaryTotal">
+<span>Total</span>
+<b>₹${total}</b>
+</div>
+
+<form id="checkoutForm" class="checkoutForm">
+
+<label>
+Full name
+<input required id="cName" placeholder="Your name">
+</label>
+
+<label>
+Phone
+<input
+required
+id="cPhone"
+type="tel"
+placeholder="10-digit number"
+pattern="[0-9]{10}"
+>
+</label>
+
+<label>
+Delivery address
+<textarea
+required
+id="cAddr"
+placeholder="House no, street, city, PIN"
+></textarea>
+</label>
+
+<label>
+Payment method
+<select id="cPay">
+<option>Cash on Delivery</option>
+<option>UPI</option>
+<option>Card</option>
+</select>
+</label>
+
+<div class="formRow">
+
+<button
+type="button"
+class="btn"
+id="backToCart"
+>
+← Back
+</button>
+
+<button
+type="submit"
+class="heroBtn placeOrderBtn"
+>
+Place Order · ₹${total}
+</button>
+
+</div>
+
+</form>
+
+`;
+
+$("backToCart").onclick = renderCart;
+
+$("checkoutForm").onsubmit = e => {
+
+e.preventDefault();
+
+const order = {
+
+id:"KGGT"+Math.floor(
+100000 + Math.random()*900000
+),
+
+count:a.length,
+total,
+
+name:$("cName").value.trim(),
+phone:$("cPhone").value.trim(),
+addr:$("cAddr").value.trim(),
+pay:$("cPay").value
+
+};
+
+cart.clear();
+
+save();
+render();
+
+renderConfirmation(order);
+
+};
+
+}
+
+
+function renderConfirmation(order){
+
+$("modalTitle").textContent =
+"Order Placed 🎉";
+
+$("modalBody").innerHTML = `
+
+<div class="confirmBox">
+
+<div class="confirmIcon">✓</div>
+
+<p>
+Thanks,
+<b>${order.name}</b>!
+Your order
+<b>#${order.id}</b>
+has been placed.
+</p>
+
+<div class="line">
+<span>Items</span>
+<b>${order.count}</b>
+</div>
+
+<div class="line">
+<span>Delivery to</span>
+<b>${order.addr}</b>
+</div>
+
+<div class="line">
+<span>Payment</span>
+<b>${order.pay}</b>
+</div>
+
+<div class="summaryTotal">
+<span>Total</span>
+<b>₹${order.total}</b>
+</div>
+
+<button
+class="heroBtn"
+id="continueShopping"
+>
+Continue Shopping
+</button>
+
+</div>
+
+`;
+
+$("continueShopping").onclick = closeModal;
+
+}
+
+
+function closeModal(){
+
+$("modal").classList.remove("show");
+
+}
+
+
+/* ================= UPLOADS ================= */
+
+function saveUploads(){
+
+try{
+
+localStorage.setItem(
+"kggtUploads",
+JSON.stringify(uploads)
+);
+
+return true;
+
+}catch(e){
+
+alert(
+"Storage is full — try a smaller image, or delete an old upload first."
+);
+
+return false;
+
+}
+
+}
+
 
 function renderUploads(){
 
- if(!uploads.length){
+$("uploadCount").textContent =
+uploads.length;
 
-  $("uploadGrid").innerHTML=
-   `<div class="empty">
-    No community artwork yet.<br>
-    Upload the first one.
-   </div>`;
+$("uploadsGrid").innerHTML = uploads.length
 
-  return;
+? uploads.map(u => `
 
- }
+<div class="uCard">
 
- $("uploadGrid").innerHTML=uploads.map(item=>`
+<img
+src="${u.img}"
+alt="${u.title}"
+loading="lazy"
+>
 
-  <article class="uploadCard">
+<button
+class="uDel"
+data-id="${u.id}"
+>
+✕
+</button>
 
-   <img
-    src="${item.image}"
-    alt="${escapeHTML(item.title)}"
-    loading="lazy"
-   >
+<div class="uInfo">
 
-   <button
-    class="deleteBtn"
-    onclick="deleteUpload(${item.id})">
-    ×
-   </button>
+<b>${u.title}</b>
 
-   <div class="uploadInfo">
+<small>
+by ${u.by}
+</small>
 
-    <b>${escapeHTML(item.title)}</b>
+</div>
 
-    <small>
-     ${escapeHTML(item.category)}
-     · by ${escapeHTML(item.by)}
-    </small>
+</div>
 
-    <div style="
-     margin-top:8px;
-     font-weight:bold;
-    ">
-     ₹${item.price}
-    </div>
+`).join("")
 
-   </div>
+:
 
-  </article>
-
- `).join("");
-
-}
+`<div class="empty">
+<b>No member uploads yet.</b>
+<br>
+Be the first to share your artwork.
+</div>`;
 
 
-function deleteUpload(id){
+$("uploadsGrid")
+.querySelectorAll(".uDel")
+.forEach(b => {
 
- if(!confirm("Delete this artwork?"))return;
+b.onclick = () => {
 
- uploads=
-  uploads.filter(item=>item.id!==id);
+uploads =
+uploads.filter(u => u.id !== b.dataset.id);
 
- localStorage.setItem(
-  "kggtUploads",
-  JSON.stringify(uploads)
- );
+saveUploads();
 
- renderUploads();
- updateCounts();
+renderUploads();
 
-}
-
-
-/* =========================================
-   CATEGORY BUTTONS
-========================================= */
-
-document.querySelectorAll(".category")
-.forEach(button=>{
-
- button.addEventListener("click",()=>{
-
-  document
-   .querySelectorAll(".category")
-   .forEach(x=>x.classList.remove("active"));
-
-  button.classList.add("active");
-
-  activeCategory=button.dataset.cat;
-
-  render();
-
- });
+};
 
 });
 
+}
 
-/* =========================================
-   SEARCH
-========================================= */
+
+/* ================= IMAGE PROCESSING ================= */
+
+function resizeImage(file,maxW,quality){
+
+return new Promise((resolve,reject)=>{
+
+if(!file.type.startsWith("image/")){
+
+reject(new Error("not an image"));
+return;
+
+}
+
+const reader = new FileReader();
+
+reader.onload = e => {
+
+const img = new Image();
+
+img.onload = () => {
+
+let w = img.width;
+let h = img.height;
+
+if(w > maxW){
+
+h = Math.round(h * maxW / w);
+w = maxW;
+
+}
+
+const c = document.createElement("canvas");
+
+c.width = w;
+c.height = h;
+
+c.getContext("2d")
+.drawImage(img,0,0,w,h);
+
+resolve(
+c.toDataURL("image/jpeg",quality)
+);
+
+};
+
+img.onerror =
+() => reject(new Error("bad image"));
+
+img.src = e.target.result;
+
+};
+
+reader.onerror =
+() => reject(new Error("read failed"));
+
+reader.readAsDataURL(file);
+
+}
+
+
+/* ================= PASSWORD PROTECTION ================= */
+
+const UPLOAD_PASSWORD = "orderfirst";
+
+
+function openUpload(name){
+
+$("uploadForm").reset();
+
+pendingImg = null;
+
+$("uPreviewWrap").innerHTML = "";
+
+$("passwordScreen").style.display = "block";
+$("uploadScreen").style.display = "none";
+
+$("uploadPassword").value = "";
+
+$("passwordError").style.display = "none";
+
+if(name)
+$("uBy").value = name;
+
+$("uploadModal").classList.add("show");
+
+setTimeout(
+() => $("uploadPassword").focus(),
+100
+);
+
+}
+
+
+/* PASSWORD CHECK */
+
+$("passwordForm").onsubmit = e => {
+
+e.preventDefault();
+
+const entered =
+$("uploadPassword").value;
+
+if(entered === UPLOAD_PASSWORD){
+
+$("passwordScreen").style.display = "none";
+
+$("uploadScreen").style.display = "block";
+
+$("passwordError").style.display = "none";
+
+}else{
+
+$("passwordError").style.display = "block";
+
+$("uploadPassword").value = "";
+
+$("uploadPassword").focus();
+
+}
+
+};
+
+
+/* ================= EVENTS ================= */
 
 $("search").addEventListener(
- "input",
- render
+"input",
+render
 );
 
 
-/* =========================================
-   BUTTONS
-========================================= */
+document.querySelectorAll(".chip")
+.forEach(b => {
 
-$("wishBtn").onclick=showWishlist;
+b.addEventListener("click",()=>{
 
-$("cartBtn").onclick=showCart;
+document
+.querySelectorAll(".chip")
+.forEach(x =>
+x.classList.remove("active")
+);
 
-$("membersBtn").onclick=()=>{
- $("membersModal").classList.add("show");
-};
+b.classList.add("active");
 
-$("membersClose").onclick=()=>{
- $("membersModal").classList.remove("show");
-};
+active = b.dataset.cat;
 
-$("uploadBtn").onclick=openUpload;
+render();
 
-$("uploadHeroBtn").onclick=openUpload;
-
-$("uploadClose").onclick=closeUpload;
-
-$("mainClose").onclick=closeMain;
-
-$("exploreBtn").onclick=()=>{
- $("gallery").scrollIntoView({
-  behavior:"smooth"
- });
-};
-
-
-/* =========================================
-   CLICK OUTSIDE MODALS
-========================================= */
-
-document.querySelectorAll(".modal")
-.forEach(modal=>{
-
- modal.addEventListener("click",e=>{
-
-  if(e.target===modal)
-   modal.classList.remove("show");
-
- });
+});
 
 });
 
 
-/* =========================================
-   ESCAPE KEY
-========================================= */
+$("membersBtn").onclick =
+() => $("membersModal").classList.add("show");
+
+
+$("membersClose").onclick =
+() => $("membersModal").classList.remove("show");
+
+
+$("membersModal").onclick = e => {
+
+if(e.target.id === "membersModal")
+$("membersModal").classList.remove("show");
+
+};
+
+
+$("wishBtn").onclick =
+() => openList("Wishlist");
+
+
+$("cartBtn").onclick =
+() => openList("Cart");
+
+
+$("close").onclick =
+closeModal;
+
+
+$("modal").onclick = e => {
+
+if(e.target.id === "modal")
+closeModal();
+
+};
+
+
+$("explore").onclick = () =>
+$("gallery").scrollIntoView({
+behavior:"smooth"
+});
+
+
+document.querySelectorAll(".uploadBtn")
+.forEach(b => {
+
+b.onclick = () =>
+openUpload(b.dataset.name);
+
+});
+
+
+$("openUploadBtn").onclick =
+() => openUpload();
+
+
+$("uploadClose").onclick =
+() => $("uploadModal").classList.remove("show");
+
+
+$("uploadModal").onclick = e => {
+
+if(e.target.id === "uploadModal")
+$("uploadModal").classList.remove("show");
+
+};
+
 
 document.addEventListener("keydown",e=>{
 
- if(e.key==="Escape"){
+if(e.key === "Escape"){
 
-  document
-   .querySelectorAll(".modal")
-   .forEach(m=>m.classList.remove("show"));
+closeModal();
 
- }
+$("membersModal")
+.classList.remove("show");
+
+$("uploadModal")
+.classList.remove("show");
+
+}
+
+});
+
+
+/* IMAGE PREVIEW */
+
+$("uFile").addEventListener(
+"change",
+async () => {
+
+const f = $("uFile").files[0];
+
+if(!f) return;
+
+if(f.size > 10*1024*1024){
+
+alert(
+"Please choose an image under 10MB."
+);
+
+$("uFile").value = "";
+
+return;
+
+}
+
+try{
+
+pendingImg =
+await resizeImage(f,900,.82);
+
+$("uPreviewWrap").innerHTML =
+`<img src="${pendingImg}" alt="Preview">`;
+
+}catch(err){
+
+alert(
+"Could not read that image — please try another file."
+);
+
+$("uFile").value = "";
+
+pendingImg = null;
+
+}
 
 });
 
 
-/* =========================================
-   BOOT
-========================================= */
+/* POST ARTWORK */
 
-window.addEventListener("load",()=>{
+$("uploadForm").onsubmit = e => {
 
- setTimeout(()=>{
+e.preventDefault();
 
-  $("boot").classList.add("hide");
+if(!pendingImg){
 
- },2600);
+alert("Please choose an image first.");
 
- render();
- renderUploads();
- updateCounts();
+return;
+
+}
+
+uploads.unshift({
+
+id:"u"+Date.now(),
+
+title:$("uTitle").value.trim(),
+
+by:$("uBy").value.trim(),
+
+img:pendingImg
 
 });
+
+if(saveUploads()){
+
+renderUploads();
+
+$("uploadModal").classList.remove("show");
+
+}
+
+};
+
+
+/* ================= START ================= */
+
+counts();
+render();
+renderUploads();
 
 </script>
 
