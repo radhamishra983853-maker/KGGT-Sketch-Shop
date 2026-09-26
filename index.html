@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#08080d">
+<meta name="theme-color" content="#07070b">
 <title>KGGT SKETCH SHOP</title>
 
 <style>
 :root{
 --bg:#07070b;
---bg2:#0d0d14;
 --panel:#11111a;
 --panel2:#171721;
 --line:#292938;
@@ -45,14 +44,12 @@ min-height:100vh;
 overflow-x:hidden;
 }
 
-/* BACKGROUND */
-
 body:before{
 content:"";
 position:fixed;
 inset:0;
 pointer-events:none;
-opacity:.18;
+opacity:.16;
 background-image:
 linear-gradient(#fff 1px,transparent 1px),
 linear-gradient(90deg,#fff 1px,transparent 1px);
@@ -81,7 +78,7 @@ from{transform:translate(0,0)}
 to{transform:translate(220px,-100px)}
 }
 
-/* BOOT */
+/* ================= BOOT ================= */
 
 #boot{
 position:fixed;
@@ -123,8 +120,8 @@ height:220px;
 }
 
 .bootCore:after{
-width:300px;
-height:300px;
+width:310px;
+height:310px;
 animation-delay:.4s;
 }
 
@@ -136,13 +133,12 @@ background:linear-gradient(90deg,#fff,#a78bfa,#22d3ee);
 -webkit-background-clip:text;
 background-clip:text;
 color:transparent;
-text-shadow:0 0 40px #8b5cf655;
 animation:bootPulse 1s infinite alternate;
 }
 
 .bootSub{
-font-size:11px;
-letter-spacing:7px;
+font-size:10px;
+letter-spacing:6px;
 color:#888;
 margin-top:5px;
 }
@@ -173,8 +169,14 @@ animation:bootLoad 1.8s ease forwards;
 }
 
 @keyframes ring{
-0%{transform:translate(-50%,-50%) scale(.7);opacity:.8}
-100%{transform:translate(-50%,-50%) scale(1.25);opacity:0}
+0%{
+transform:translate(-50%,-50%) scale(.7);
+opacity:.8;
+}
+100%{
+transform:translate(-50%,-50%) scale(1.25);
+opacity:0;
+}
 }
 
 @keyframes bootPulse{
@@ -186,7 +188,7 @@ to{transform:scale(1.04)}
 to{width:100%}
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 header{
 position:sticky;
@@ -293,7 +295,7 @@ color:#fff;
 margin-left:4px;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 
 .hero{
 max-width:1400px;
@@ -406,7 +408,7 @@ border-radius:11px;
 cursor:pointer;
 }
 
-/* SECTION */
+/* ================= SECTIONS ================= */
 
 .sectionHead{
 max-width:1400px;
@@ -456,7 +458,7 @@ color:#fff;
 border-color:#8b5cf6;
 }
 
-/* PRODUCTS */
+/* ================= PRODUCTS ================= */
 
 .grid{
 max-width:1400px;
@@ -487,6 +489,7 @@ height:235px;
 position:relative;
 overflow:hidden;
 background:#101018;
+cursor:zoom-in;
 }
 
 .pic{
@@ -499,6 +502,22 @@ transition:.45s;
 
 .card:hover .pic{
 transform:scale(1.06);
+}
+
+.picZoom{
+position:absolute;
+right:10px;
+bottom:10px;
+width:35px;
+height:35px;
+display:grid;
+place-items:center;
+border-radius:50%;
+background:#050509bb;
+border:1px solid #ffffff25;
+backdrop-filter:blur(10px);
+font-size:17px;
+pointer-events:none;
 }
 
 .tag{
@@ -583,7 +602,16 @@ background:#a78bfa;
 background:#22c55e;
 }
 
-/* UPLOADS */
+.empty{
+grid-column:1/-1;
+text-align:center;
+padding:65px 20px;
+border:1px dashed #ffffff18;
+border-radius:16px;
+color:#777;
+}
+
+/* ================= UPLOADS ================= */
 
 .uploadsGrid{
 max-width:1400px;
@@ -608,11 +636,37 @@ transform:translateY(-5px);
 border-color:#22d3ee55;
 }
 
+.uImageWrap{
+height:220px;
+position:relative;
+cursor:zoom-in;
+overflow:hidden;
+}
+
 .uCard img{
 width:100%;
-height:220px;
+height:100%;
 object-fit:cover;
 display:block;
+transition:.4s;
+}
+
+.uCard:hover img{
+transform:scale(1.05);
+}
+
+.uZoom{
+position:absolute;
+right:10px;
+bottom:10px;
+width:35px;
+height:35px;
+display:grid;
+place-items:center;
+border-radius:50%;
+background:#050509cc;
+border:1px solid #ffffff25;
+pointer-events:none;
 }
 
 .uInfo{
@@ -640,6 +694,7 @@ border:1px solid #ffffff18;
 background:#08080dcc;
 color:white;
 cursor:pointer;
+z-index:5;
 }
 
 .uDel:hover{
@@ -647,16 +702,7 @@ color:#fb7185;
 border-color:#fb7185;
 }
 
-.empty{
-grid-column:1/-1;
-text-align:center;
-padding:65px 20px;
-border:1px dashed #ffffff18;
-border-radius:16px;
-color:#777;
-}
-
-/* FEATURES */
+/* ================= FEATURES ================= */
 
 .features{
 max-width:1400px;
@@ -689,13 +735,13 @@ color:#777;
 line-height:1.5;
 }
 
-/* MODAL */
+/* ================= MODALS ================= */
 
 .modal{
 position:fixed;
 inset:0;
-background:#000b;
-backdrop-filter:blur(10px);
+background:#000c;
+backdrop-filter:blur(12px);
 display:none;
 place-items:center;
 padding:20px;
@@ -719,8 +765,14 @@ animation:modalIn .2s ease;
 }
 
 @keyframes modalIn{
-from{opacity:0;transform:translateY(15px) scale(.98)}
-to{opacity:1;transform:none}
+from{
+opacity:0;
+transform:translateY(15px) scale(.98);
+}
+to{
+opacity:1;
+transform:none;
+}
 }
 
 .close{
@@ -737,7 +789,137 @@ color:#888;
 line-height:1.6;
 }
 
-/* MEMBERS */
+/* ================= FULL SCREEN IMAGE PREVIEW ================= */
+
+#imageViewer{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at center,#171321,#020204 70%);
+backdrop-filter:blur(18px);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:10000;
+padding:25px;
+}
+
+#imageViewer.show{
+display:flex;
+}
+
+.viewerImage{
+max-width:94vw;
+max-height:88vh;
+width:auto;
+height:auto;
+object-fit:contain;
+border-radius:8px;
+box-shadow:
+0 30px 100px #000,
+0 0 70px #8b5cf633;
+animation:imageOpen .25s ease;
+}
+
+@keyframes imageOpen{
+from{
+opacity:0;
+transform:scale(.92);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+.viewerTop{
+position:absolute;
+top:18px;
+left:20px;
+right:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:3;
+}
+
+.viewerTitle{
+background:#08080dcc;
+border:1px solid #ffffff18;
+backdrop-filter:blur(12px);
+border-radius:12px;
+padding:10px 14px;
+}
+
+.viewerTitle b{
+display:block;
+font-size:14px;
+}
+
+.viewerTitle span{
+font-size:10px;
+color:#888;
+}
+
+.viewerClose{
+width:45px;
+height:45px;
+border-radius:50%;
+border:1px solid #ffffff22;
+background:#08080dcc;
+color:white;
+font-size:22px;
+cursor:pointer;
+}
+
+.viewerClose:hover{
+background:#fb7185;
+border-color:#fb7185;
+}
+
+.viewerBottom{
+position:absolute;
+bottom:18px;
+left:50%;
+transform:translateX(-50%);
+background:#08080dcc;
+border:1px solid #ffffff18;
+backdrop-filter:blur(12px);
+padding:9px 14px;
+border-radius:30px;
+font-size:11px;
+color:#aaa;
+white-space:nowrap;
+}
+
+.viewerArrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:48px;
+height:48px;
+border-radius:50%;
+border:1px solid #ffffff18;
+background:#08080dcc;
+color:white;
+font-size:25px;
+cursor:pointer;
+z-index:4;
+}
+
+.viewerArrow:hover{
+background:#8b5cf6;
+}
+
+.viewerPrev{
+left:20px;
+}
+
+.viewerNext{
+right:20px;
+}
+
+/* ================= MEMBERS ================= */
 
 .membersGrid{
 display:grid;
@@ -784,7 +966,7 @@ font-size:10px;
 padding:5px 8px;
 }
 
-/* FORMS */
+/* ================= FORMS ================= */
 
 .form{
 display:flex;
@@ -823,13 +1005,12 @@ min-height:80px;
 resize:vertical;
 }
 
-.formRow{
-display:flex;
-gap:9px;
-}
-
-.formRow>*{
-flex:1;
+.preview img{
+width:100%;
+max-height:230px;
+object-fit:cover;
+border-radius:11px;
+margin-top:5px;
 }
 
 .error{
@@ -839,15 +1020,7 @@ font-size:12px;
 margin-top:8px;
 }
 
-.preview img{
-width:100%;
-max-height:230px;
-object-fit:cover;
-border-radius:11px;
-margin-top:5px;
-}
-
-/* CART */
+/* ================= CART ================= */
 
 .cartItem{
 display:flex;
@@ -898,7 +1071,7 @@ font-size:30px;
 font-weight:900;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 footer{
 border-top:1px solid #ffffff0b;
@@ -908,9 +1081,10 @@ color:#666;
 font-size:12px;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:1050px){
+
 .grid,
 .uploadsGrid{
 grid-template-columns:repeat(3,1fr);
@@ -923,9 +1097,11 @@ grid-template-columns:repeat(2,1fr);
 .navActions .btn{
 font-size:11px;
 }
+
 }
 
 @media(max-width:750px){
+
 .nav{
 flex-wrap:wrap;
 }
@@ -966,9 +1142,28 @@ letter-spacing:-3px;
 .membersGrid{
 grid-template-columns:1fr;
 }
+
+.viewerArrow{
+width:40px;
+height:40px;
+}
+
+.viewerPrev{
+left:8px;
+}
+
+.viewerNext{
+right:8px;
+}
+
+.viewerTitle{
+max-width:70%;
+}
+
 }
 
 @media(max-width:480px){
+
 .logo{
 font-size:22px;
 }
@@ -1007,6 +1202,10 @@ grid-template-columns:1fr 1fr;
 height:160px;
 }
 
+.uImageWrap{
+height:160px;
+}
+
 .features{
 grid-template-columns:1fr;
 }
@@ -1023,26 +1222,48 @@ width:100%;
 .bootLogo{
 font-size:50px;
 }
+
+.viewerBottom{
+font-size:9px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- BOOT -->
+<!-- ================= BOOT ================= -->
 
 <div id="boot">
+
 <div class="bootCore">
-<div class="bootLogo">KGGT</div>
-<div class="bootSub">SKETCH SHOP // SYSTEM ONLINE</div>
-<div class="bootStatus" id="bootStatus">INITIALIZING...</div>
-<div class="bootBar"><i></i></div>
-</div>
+
+<div class="bootLogo">
+KGGT
 </div>
 
-<!-- NAV -->
+<div class="bootSub">
+SKETCH SHOP // SYSTEM ONLINE
+</div>
+
+<div class="bootStatus" id="bootStatus">
+INITIALIZING...
+</div>
+
+<div class="bootBar">
+<i></i>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= HEADER ================= -->
 
 <header>
+
 <div class="nav">
 
 <div class="logo">
@@ -1051,22 +1272,27 @@ KGGT
 </div>
 
 <div class="search">
+
 <input
 id="search"
 type="search"
 placeholder="Search sketches, anime, cars, nature..."
 >
+
 <span class="searchIcon">⌕</span>
+
 </div>
 
 <div class="navActions">
 
 <button class="btn" id="wishBtn">
-♡ Wishlist <b class="count" id="wc">0</b>
+♡ Wishlist
+<b class="count" id="wc">0</b>
 </button>
 
 <button class="btn" id="cartBtn">
-🛒 Cart <b class="count" id="cc">0</b>
+🛒 Cart
+<b class="count" id="cc">0</b>
 </button>
 
 <button class="btn" id="membersBtn">
@@ -1076,9 +1302,11 @@ placeholder="Search sketches, anime, cars, nature..."
 </div>
 
 </div>
+
 </header>
 
-<!-- HERO -->
+
+<!-- ================= HERO ================= -->
 
 <section class="hero">
 
@@ -1119,11 +1347,14 @@ UPLOAD ARTWORK
 
 </section>
 
-<!-- COLLECTION -->
+
+<!-- ================= COLLECTION ================= -->
 
 <div class="sectionHead">
 
-<h2>Popular Sketches</h2>
+<h2>
+Popular Sketches
+</h2>
 
 <span id="resultCount">
 20 drawings
@@ -1169,7 +1400,8 @@ Sports
 
 <main id="gallery" class="grid"></main>
 
-<!-- MEMBER UPLOADS -->
+
+<!-- ================= MEMBER UPLOADS ================= -->
 
 <div class="sectionHead">
 
@@ -1186,7 +1418,8 @@ Member Uploads
 
 <div id="uploadsGrid" class="uploadsGrid"></div>
 
-<!-- FEATURES -->
+
+<!-- ================= FEATURES ================= -->
 
 <section class="features">
 
@@ -1224,12 +1457,69 @@ Lightweight interface designed to stay smooth.
 
 </section>
 
+
 <footer>
 © 2026 KGGT SKETCH SHOP · CREATE • SHARE • INSPIRE
 </footer>
 
 
-<!-- MEMBERS MODAL -->
+<!-- ================= FULLSCREEN IMAGE VIEWER ================= -->
+
+<div id="imageViewer">
+
+<div class="viewerTop">
+
+<div class="viewerTitle">
+
+<b id="viewerTitle">
+KGGT Artwork
+</b>
+
+<span id="viewerCategory">
+Artwork
+</span>
+
+</div>
+
+<button class="viewerClose" id="viewerClose">
+✕
+</button>
+
+</div>
+
+
+<button
+class="viewerArrow viewerPrev"
+id="viewerPrev"
+>
+‹
+</button>
+
+
+<img
+class="viewerImage"
+id="viewerImage"
+src=""
+alt="Fullscreen artwork"
+>
+
+
+<button
+class="viewerArrow viewerNext"
+id="viewerNext"
+>
+›
+</button>
+
+
+<div class="viewerBottom">
+CLICK OUTSIDE OR PRESS ESC TO CLOSE · ← → TO CHANGE
+</div>
+
+</div>
+
+
+<!-- ================= MEMBERS MODAL ================= -->
 
 <div class="modal" id="membersModal">
 
@@ -1243,7 +1533,9 @@ Lightweight interface designed to stay smooth.
 KGGT TEAM
 </span>
 
-<h2>Meet The Members</h2>
+<h2>
+Meet The Members
+</h2>
 
 <div class="membersGrid">
 
@@ -1305,10 +1597,11 @@ Upload
 </div>
 
 </div>
+
 </div>
 
 
-<!-- UPLOAD MODAL -->
+<!-- ================= UPLOAD MODAL ================= -->
 
 <div class="modal" id="uploadModal">
 
@@ -1318,6 +1611,7 @@ Upload
 ✕
 </button>
 
+
 <!-- PASSWORD -->
 
 <div id="passwordScreen">
@@ -1326,7 +1620,9 @@ Upload
 🔐 PROTECTED AREA
 </span>
 
-<h2>Artwork Upload</h2>
+<h2>
+Artwork Upload
+</h2>
 
 <p>
 Enter the KGGT upload password to continue.
@@ -1335,6 +1631,7 @@ Enter the KGGT upload password to continue.
 <form class="form" id="passwordForm">
 
 <label>
+
 Access Password
 
 <input
@@ -1368,11 +1665,14 @@ Incorrect password. Please try again.
 ✦ CREATOR MODE
 </span>
 
-<h2>Upload Your Artwork</h2>
+<h2>
+Upload Your Artwork
+</h2>
 
 <form class="form" id="uploadForm">
 
 <label>
+
 Artwork Title
 
 <input
@@ -1385,6 +1685,7 @@ placeholder="Example: Dragon Warrior"
 </label>
 
 <label>
+
 Artist Name
 
 <input
@@ -1397,6 +1698,7 @@ placeholder="Your name"
 </label>
 
 <label>
+
 Category
 
 <select id="uCategory">
@@ -1415,6 +1717,7 @@ Category
 </label>
 
 <label>
+
 Choose Artwork
 
 <input
@@ -1437,10 +1740,11 @@ PUBLISH ARTWORK ✦
 </div>
 
 </div>
+
 </div>
 
 
-<!-- GENERAL MODAL -->
+<!-- ================= GENERAL MODAL ================= -->
 
 <div class="modal" id="generalModal">
 
@@ -1463,12 +1767,12 @@ KGGT
 
 <script>
 
-/* ==========================================
+/* =====================================================
    KGGT SKETCH SHOP
-   ========================================== */
+   ===================================================== */
 
 
-/* ---------------- PRODUCTS ---------------- */
+/* ================= PRODUCTS ================= */
 
 const products=[
 
@@ -1478,7 +1782,7 @@ title:"Anime Warrior",
 cat:"Anime",
 price:299,
 rating:4.8,
-image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1487,7 +1791,7 @@ title:"Neon Racer",
 cat:"Cars",
 price:399,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1496,7 +1800,7 @@ title:"Wolf Sketch",
 cat:"Animals",
 price:249,
 rating:4.7,
-image:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1505,7 +1809,7 @@ title:"Mountain Escape",
 cat:"Nature",
 price:199,
 rating:4.8,
-image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1514,7 +1818,7 @@ title:"Portrait Study",
 cat:"Portraits",
 price:349,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1523,7 +1827,7 @@ title:"Fantasy Castle",
 cat:"Fantasy",
 price:449,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1532,7 +1836,7 @@ title:"Football Art",
 cat:"Sports",
 price:249,
 rating:4.7,
-image:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1541,7 +1845,7 @@ title:"JDM Legend",
 cat:"Cars",
 price:399,
 rating:4.8,
-image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1550,7 +1854,7 @@ title:"Eagle Vision",
 cat:"Animals",
 price:299,
 rating:4.8,
-image:"https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1559,7 +1863,7 @@ title:"Forest Dream",
 cat:"Nature",
 price:229,
 rating:4.7,
-image:"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1568,7 +1872,7 @@ title:"Samurai Spirit",
 cat:"Anime",
 price:329,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1577,7 +1881,7 @@ title:"Dragon Realm",
 cat:"Fantasy",
 price:499,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1586,7 +1890,7 @@ title:"Space Hero",
 cat:"Fantasy",
 price:379,
 rating:4.8,
-image:"https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1595,7 +1899,7 @@ title:"Tiger Study",
 cat:"Animals",
 price:279,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1604,7 +1908,7 @@ title:"City Lights",
 cat:"Nature",
 price:229,
 rating:4.7,
-image:"https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1613,7 +1917,7 @@ title:"Classic Portrait",
 cat:"Portraits",
 price:349,
 rating:4.8,
-image:"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1622,7 +1926,7 @@ title:"Ocean View",
 cat:"Nature",
 price:199,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1631,7 +1935,7 @@ title:"Basketball Sketch",
 cat:"Sports",
 price:249,
 rating:4.7,
-image:"https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1640,7 +1944,7 @@ title:"Cat Sketch",
 cat:"Animals",
 price:229,
 rating:4.8,
-image:"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1200&q=85"
 },
 
 {
@@ -1649,13 +1953,13 @@ title:"Motorbike Study",
 cat:"Cars",
 price:379,
 rating:4.9,
-image:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80"
+image:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=85"
 }
 
 ];
 
 
-/* ---------------- STORAGE ---------------- */
+/* ================= STORAGE ================= */
 
 let wishlist=new Set(
 JSON.parse(localStorage.getItem("kggtWishlist")||"[]")
@@ -1674,7 +1978,13 @@ let activeCategory="All";
 let pendingImage=null;
 
 
-/* ---------------- HELPERS ---------------- */
+/* ================= VIEWER STATE ================= */
+
+let viewerItems=[];
+let viewerIndex=0;
+
+
+/* ================= HELPERS ================= */
 
 const $=id=>document.getElementById(id);
 
@@ -1703,11 +2013,123 @@ $("uploadCount").textContent=uploads.length;
 }
 
 
-/* ---------------- PRODUCTS ---------------- */
+/* ================= FULLSCREEN VIEWER ================= */
+
+function openImageViewer(items,index){
+
+if(!items.length)
+return;
+
+viewerItems=items;
+viewerIndex=index;
+
+showViewerImage();
+
+$("imageViewer").classList.add("show");
+
+document.body.style.overflow="hidden";
+
+}
+
+function showViewerImage(){
+
+const item=viewerItems[viewerIndex];
+
+if(!item)
+return;
+
+$("viewerImage").src=item.image;
+
+$("viewerTitle").textContent=
+item.title||"KGGT Artwork";
+
+$("viewerCategory").textContent=
+(item.cat||item.category||"Artwork")+
+(item.artist?" · by "+item.artist:"");
+
+}
+
+function closeImageViewer(){
+
+$("imageViewer").classList.remove("show");
+
+document.body.style.overflow="";
+
+}
+
+function viewerNext(){
+
+if(!viewerItems.length)
+return;
+
+viewerIndex=
+(viewerIndex+1)%viewerItems.length;
+
+showViewerImage();
+
+}
+
+function viewerPrev(){
+
+if(!viewerItems.length)
+return;
+
+viewerIndex=
+(viewerIndex-1+viewerItems.length)
+%viewerItems.length;
+
+showViewerImage();
+
+}
+
+$("viewerClose").onclick=
+closeImageViewer;
+
+$("viewerNext").onclick=
+viewerNext;
+
+$("viewerPrev").onclick=
+viewerPrev;
+
+$("imageViewer").addEventListener(
+"click",
+event=>{
+
+if(event.target===$("imageViewer")){
+closeImageViewer();
+}
+
+});
+
+document.addEventListener(
+"keydown",
+event=>{
+
+if(!$("imageViewer").classList.contains("show"))
+return;
+
+if(event.key==="Escape"){
+closeImageViewer();
+}
+
+if(event.key==="ArrowRight"){
+viewerNext();
+}
+
+if(event.key==="ArrowLeft"){
+viewerPrev();
+}
+
+});
+
+
+
+/* ================= PRODUCTS ================= */
 
 function renderProducts(){
 
-const search=$("search").value
+const search=$("search")
+.value
 .trim()
 .toLowerCase();
 
@@ -1755,7 +2177,10 @@ filtered.map(product=>`
 
 <article class="card">
 
-<div class="picWrap">
+<div
+class="picWrap"
+data-preview="${product.id}"
+>
 
 <img
 class="pic"
@@ -1767,6 +2192,10 @@ loading="lazy"
 <span class="tag">
 ${product.cat}
 </span>
+
+<div class="picZoom">
+⛶
+</div>
 
 </div>
 
@@ -1813,13 +2242,42 @@ ${cart.has(product.id)?"Added ✓":"Add to cart"}
 
 `).join("");
 
+
+/* IMAGE CLICK */
+
+document
+.querySelectorAll("[data-preview]")
+.forEach(element=>{
+
+element.onclick=()=>{
+
+const id=
+Number(element.dataset.preview);
+
+const index=
+products.findIndex(
+product=>product.id===id
+);
+
+openImageViewer(products,index);
+
+};
+
+});
+
+
+/* WISHLIST */
+
 document
 .querySelectorAll("[data-wish]")
 .forEach(button=>{
 
-button.onclick=()=>{
+button.onclick=event=>{
 
-const id=Number(button.dataset.wish);
+event.stopPropagation();
+
+const id=
+Number(button.dataset.wish);
 
 if(wishlist.has(id))
 wishlist.delete(id);
@@ -1827,19 +2285,26 @@ else
 wishlist.add(id);
 
 saveState();
+
 renderProducts();
 
 };
 
 });
 
+
+/* CART */
+
 document
 .querySelectorAll("[data-cart]")
 .forEach(button=>{
 
-button.onclick=()=>{
+button.onclick=event=>{
 
-const id=Number(button.dataset.cart);
+event.stopPropagation();
+
+const id=
+Number(button.dataset.cart);
 
 if(cart.has(id))
 cart.delete(id);
@@ -1847,6 +2312,7 @@ else
 cart.add(id);
 
 saveState();
+
 renderProducts();
 
 };
@@ -1856,20 +2322,26 @@ renderProducts();
 }
 
 
-/* ---------------- UPLOAD RENDER ---------------- */
+/* ================= UPLOAD RENDER ================= */
 
 function renderUploads(){
 
-$("uploadCount").textContent=uploads.length;
+$("uploadCount").textContent=
+uploads.length;
 
 if(!uploads.length){
 
 $("uploadsGrid").innerHTML=`
 <div class="empty">
-<h3>No member artwork yet</h3>
+
+<h3>
+No member artwork yet
+</h3>
+
 <p style="margin-top:8px">
 Upload the first artwork to the KGGT community.
 </p>
+
 </div>
 `;
 
@@ -1882,11 +2354,22 @@ uploads.map(upload=>`
 
 <div class="uCard">
 
+<div
+class="uImageWrap"
+data-upload-preview="${upload.id}"
+>
+
 <img
 src="${upload.image}"
 alt="${escapeHTML(upload.title)}"
 loading="lazy"
 >
+
+<div class="uZoom">
+⛶
+</div>
+
+</div>
 
 <button
 class="uDel"
@@ -1913,13 +2396,45 @@ ${escapeHTML(upload.category)}
 
 `).join("");
 
+
+/* UPLOAD IMAGE FULLSCREEN */
+
+document
+.querySelectorAll("[data-upload-preview]")
+.forEach(element=>{
+
+element.onclick=()=>{
+
+const id=
+element.dataset.uploadPreview;
+
+const index=
+uploads.findIndex(
+upload=>upload.id===id
+);
+
+openImageViewer(
+uploads,
+index
+);
+
+};
+
+});
+
+
+/* DELETE */
+
 document
 .querySelectorAll("[data-delete]")
 .forEach(button=>{
 
-button.onclick=()=>{
+button.onclick=event=>{
 
-const id=button.dataset.delete;
+event.stopPropagation();
+
+const id=
+button.dataset.delete;
 
 uploads=uploads.filter(
 upload=>upload.id!==id
@@ -1939,7 +2454,7 @@ renderUploads();
 }
 
 
-/* ---------------- HTML ESCAPE ---------------- */
+/* ================= ESCAPE HTML ================= */
 
 function escapeHTML(value){
 
@@ -1953,17 +2468,22 @@ return String(value)
 }
 
 
-/* ---------------- PASSWORD ---------------- */
+/* ================= PASSWORD ================= */
 
 const UPLOAD_PASSWORD="orderfirst";
 
 function openUpload(artist=""){
 
-$("passwordScreen").style.display="block";
-$("uploadScreen").style.display="none";
+$("passwordScreen").style.display=
+"block";
+
+$("uploadScreen").style.display=
+"none";
 
 $("uploadPassword").value="";
-$("passwordError").style.display="none";
+
+$("passwordError").style.display=
+"none";
 
 $("uploadForm").reset();
 
@@ -1973,7 +2493,8 @@ pendingImage=null;
 
 $("uPreview").innerHTML="";
 
-$("uploadModal").classList.add("show");
+$("uploadModal")
+.classList.add("show");
 
 setTimeout(()=>{
 $("uploadPassword").focus();
@@ -1982,7 +2503,7 @@ $("uploadPassword").focus();
 }
 
 
-/* ---------------- PASSWORD FORM ---------------- */
+/* ================= PASSWORD FORM ================= */
 
 $("passwordForm").addEventListener(
 "submit",
@@ -1995,17 +2516,24 @@ $("uploadPassword").value;
 
 if(entered===UPLOAD_PASSWORD){
 
-$("passwordScreen").style.display="none";
-$("uploadScreen").style.display="block";
+$("passwordScreen").style.display=
+"none";
 
-$("passwordError").style.display="none";
+$("uploadScreen").style.display=
+"block";
+
+$("passwordError").style.display=
+"none";
 
 $("uTitle").focus();
 
 }else{
 
-$("passwordError").style.display="block";
+$("passwordError").style.display=
+"block";
+
 $("uploadPassword").value="";
+
 $("uploadPassword").focus();
 
 }
@@ -2013,7 +2541,7 @@ $("uploadPassword").focus();
 });
 
 
-/* ---------------- IMAGE RESIZE ---------------- */
+/* ================= IMAGE PROCESSING ================= */
 
 function processImage(file){
 
@@ -2022,19 +2550,22 @@ return new Promise((resolve,reject)=>{
 if(!file.type.startsWith("image/")){
 
 reject("Invalid image");
+
 return;
 
 }
 
-const reader=new FileReader();
+const reader=
+new FileReader();
 
 reader.onload=event=>{
 
-const image=new Image();
+const image=
+new Image();
 
 image.onload=()=>{
 
-const MAX=1000;
+const MAX=1200;
 
 let width=image.width;
 let height=image.height;
@@ -2049,12 +2580,14 @@ width=MAX;
 
 }
 
-const canvas=document.createElement("canvas");
+const canvas=
+document.createElement("canvas");
 
 canvas.width=width;
 canvas.height=height;
 
-const context=canvas.getContext("2d");
+const context=
+canvas.getContext("2d");
 
 context.drawImage(
 image,
@@ -2067,7 +2600,7 @@ height
 resolve(
 canvas.toDataURL(
 "image/jpeg",
-.82
+.84
 )
 );
 
@@ -2077,7 +2610,8 @@ image.onerror=()=>{
 reject("Image could not be loaded");
 };
 
-image.src=event.target.result;
+image.src=
+event.target.result;
 
 };
 
@@ -2092,13 +2626,14 @@ reader.readAsDataURL(file);
 }
 
 
-/* ---------------- FILE PREVIEW ---------------- */
+/* ================= FILE PREVIEW ================= */
 
 $("uFile").addEventListener(
 "change",
 async event=>{
 
-const file=event.target.files[0];
+const file=
+event.target.files[0];
 
 if(!file)
 return;
@@ -2110,6 +2645,7 @@ alert(
 );
 
 event.target.value="";
+
 return;
 
 }
@@ -2120,10 +2656,12 @@ pendingImage=
 await processImage(file);
 
 $("uPreview").innerHTML=`
+
 <img
 src="${pendingImage}"
 alt="Artwork preview"
 >
+
 `;
 
 }catch(error){
@@ -2133,6 +2671,7 @@ alert(
 );
 
 event.target.value="";
+
 pendingImage=null;
 
 }
@@ -2140,7 +2679,7 @@ pendingImage=null;
 });
 
 
-/* ---------------- PUBLISH ---------------- */
+/* ================= PUBLISH ================= */
 
 $("uploadForm").addEventListener(
 "submit",
@@ -2150,19 +2689,22 @@ event.preventDefault();
 
 if(!pendingImage){
 
-alert("Please choose an artwork image.");
+alert(
+"Please choose an artwork image."
+);
+
 return;
 
 }
 
-const title=$("uTitle")
-.value.trim();
+const title=
+$("uTitle").value.trim();
 
-const artist=$("uBy")
-.value.trim();
+const artist=
+$("uBy").value.trim();
 
-const category=$("uCategory")
-.value;
+const category=
+$("uCategory").value;
 
 if(!title||!artist){
 
@@ -2189,7 +2731,8 @@ category:category,
 
 image:pendingImage,
 
-createdAt:new Date().toISOString()
+createdAt:
+new Date().toISOString()
 
 };
 
@@ -2216,7 +2759,8 @@ return;
 
 renderUploads();
 
-$("uploadModal").classList.remove("show");
+$("uploadModal")
+.classList.remove("show");
 
 alert(
 "Artwork published successfully! ✦"
@@ -2225,25 +2769,34 @@ alert(
 });
 
 
-/* ---------------- WISHLIST ---------------- */
+/* ================= WISHLIST ================= */
 
 function openWishlist(){
 
-const items=products.filter(
+const items=
+products.filter(
 product=>wishlist.has(product.id)
 );
 
-$("modalTitle").textContent="♡ Wishlist";
+$("modalTitle").textContent=
+"♡ Wishlist";
 
 if(!items.length){
 
 $("modalBody").innerHTML=`
+
 <div class="empty">
-<h3>Your wishlist is empty.</h3>
+
+<h3>
+Your wishlist is empty.
+</h3>
+
 <p style="margin-top:8px">
 Tap the heart on an artwork to save it.
 </p>
+
 </div>
+
 `;
 
 }else{
@@ -2254,9 +2807,17 @@ items.map(product=>`
 <div class="cartItem">
 
 <div>
-<b>${product.title}</b>
+
+<b>
+${product.title}
+</b>
+
 <br>
-<small>${product.cat}</small>
+
+<small>
+${product.cat}
+</small>
+
 </div>
 
 <b>
@@ -2269,18 +2830,21 @@ items.map(product=>`
 
 }
 
-$("generalModal").classList.add("show");
+$("generalModal")
+.classList.add("show");
 
 }
 
 
-/* ---------------- CART ---------------- */
+/* ================= CART ================= */
 
 function getCartProducts(){
 
 return [...cart]
 .map(id=>
-products.find(product=>product.id===id)
+products.find(
+product=>product.id===id
+)
 )
 .filter(Boolean);
 
@@ -2288,27 +2852,39 @@ products.find(product=>product.id===id)
 
 function openCart(){
 
-const items=getCartProducts();
+const items=
+getCartProducts();
 
-$("modalTitle").textContent="🛒 Your Cart";
+$("modalTitle").textContent=
+"🛒 Your Cart";
 
 if(!items.length){
 
 $("modalBody").innerHTML=`
+
 <div class="empty">
-<h3>Your cart is empty.</h3>
+
+<h3>
+Your cart is empty.
+</h3>
+
 <p style="margin-top:8px">
 Add something from the collection.
 </p>
+
 </div>
+
 `;
 
-$("generalModal").classList.add("show");
+$("generalModal")
+.classList.add("show");
+
 return;
 
 }
 
-const total=items.reduce(
+const total=
+items.reduce(
 (sum,item)=>sum+item.price,
 0
 );
@@ -2320,13 +2896,24 @@ ${items.map(item=>`
 <div class="cartItem">
 
 <div>
-<b>${item.title}</b>
+
+<b>
+${item.title}
+</b>
+
 <br>
-<small>${item.cat}</small>
+
+<small>
+${item.cat}
+</small>
+
 </div>
 
 <div>
-<b>₹${item.price}</b>
+
+<b>
+₹${item.price}
+</b>
 
 <button
 class="remove"
@@ -2343,8 +2930,13 @@ data-remove="${item.id}"
 
 <div class="total">
 
-<span>Total</span>
-<b>₹${total}</b>
+<span>
+Total
+</span>
+
+<b>
+₹${total}
+</b>
 
 </div>
 
@@ -2369,7 +2961,9 @@ Number(button.dataset.remove)
 );
 
 saveState();
+
 openCart();
+
 renderProducts();
 
 };
@@ -2377,36 +2971,39 @@ renderProducts();
 });
 
 $("checkoutButton").onclick=
-()=>openCheckout();
+openCheckout;
 
-$("generalModal").classList.add("show");
+$("generalModal")
+.classList.add("show");
 
 }
 
 
-/* ---------------- CHECKOUT ---------------- */
+/* ================= CHECKOUT ================= */
 
 function openCheckout(){
 
-const items=getCartProducts();
+const items=
+getCartProducts();
 
 if(!items.length){
 
 openCart();
+
 return;
 
 }
 
-const total=items.reduce(
+const total=
+items.reduce(
 (sum,item)=>sum+item.price,
 0
 );
 
-$("modalTitle").textContent="Checkout";
+$("modalTitle").textContent=
+"Checkout";
 
 $("modalBody").innerHTML=`
-
-<div style="margin-bottom:15px">
 
 ${items.map(item=>`
 
@@ -2425,15 +3022,21 @@ ${item.title}
 `).join("")}
 
 <div class="total">
-<span>Total</span>
-<b>₹${total}</b>
-</div>
+
+<span>
+Total
+</span>
+
+<b>
+₹${total}
+</b>
 
 </div>
 
 <form class="form" id="checkoutForm">
 
 <label>
+
 Full Name
 
 <input
@@ -2445,6 +3048,7 @@ placeholder="Your name"
 </label>
 
 <label>
+
 Phone Number
 
 <input
@@ -2458,6 +3062,7 @@ placeholder="10-digit mobile number"
 </label>
 
 <label>
+
 Delivery Address
 
 <textarea
@@ -2469,13 +3074,22 @@ placeholder="House number, street, city, PIN"
 </label>
 
 <label>
+
 Payment Method
 
 <select id="paymentMethod">
 
-<option>Cash on Delivery</option>
-<option>UPI</option>
-<option>Card</option>
+<option>
+Cash on Delivery
+</option>
+
+<option>
+UPI
+</option>
+
+<option>
+Card
+</option>
 
 </select>
 
@@ -2507,6 +3121,7 @@ Math.random()*900000
 cart.clear();
 
 saveState();
+
 renderProducts();
 
 $("modalTitle").textContent=
@@ -2579,7 +3194,7 @@ closeGeneral;
 }
 
 
-/* ---------------- MODALS ---------------- */
+/* ================= MODAL CONTROLS ================= */
 
 function closeGeneral(){
 
@@ -2603,7 +3218,7 @@ $("uploadModal")
 }
 
 
-/* ---------------- EVENTS ---------------- */
+/* ================= EVENTS ================= */
 
 $("search").addEventListener(
 "input",
@@ -2642,7 +3257,8 @@ openCart;
 
 $("membersBtn").onclick=
 ()=>
-$("membersModal").classList.add("show");
+$("membersModal")
+.classList.add("show");
 
 $("membersClose").onclick=
 closeMembers;
@@ -2660,10 +3276,12 @@ $("generalClose").onclick=
 closeGeneral;
 
 $("explore").onclick=()=>{
+
 $("gallery").scrollIntoView({
 behavior:"smooth",
 block:"start"
 });
+
 };
 
 
@@ -2712,38 +3330,34 @@ closeUpload();
 };
 
 
-document.addEventListener(
-"keydown",
-event=>{
-
-if(event.key==="Escape"){
-
-closeGeneral();
-closeMembers();
-closeUpload();
-
-}
-
-});
-
-
-/* ---------------- BOOT ---------------- */
+/* ================= BOOT ================= */
 
 const bootMessages=[
+
 "INITIALIZING KGGT CORE...",
+
 "LOADING ART DATABASE...",
+
 "SYNCING CREATIVE MODULES...",
+
 "STARTING SKETCH ENGINE...",
+
+"STARTING IMAGE VIEWER...",
+
 "KGGT SYSTEM ONLINE"
+
 ];
 
 let bootIndex=0;
 
-const bootStatus=$("bootStatus");
+const bootStatus=
+$("bootStatus");
 
-const bootTimer=setInterval(()=>{
+const bootTimer=
+setInterval(()=>{
 
-if(bootIndex<bootMessages.length){
+if(bootIndex<
+bootMessages.length){
 
 bootStatus.textContent=
 bootMessages[bootIndex];
@@ -2758,23 +3372,27 @@ clearInterval(bootTimer);
 
 },330);
 
+
 window.addEventListener(
 "load",
 ()=>{
 
 setTimeout(()=>{
 
-$("boot").classList.add("hide");
+$("boot")
+.classList.add("hide");
 
 },2100);
 
 });
 
 
-/* ---------------- START ---------------- */
+/* ================= START ================= */
 
 updateCounts();
+
 renderProducts();
+
 renderUploads();
 
 </script>
